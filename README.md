@@ -1,8 +1,6 @@
 # Flutter iOS Pencil Kit
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 [![licence](https://img.shields.io/badge/licence-MIT-orange.svg)](https://github.com/mj-studio-library/flutter-pencilkit/blob/main/LICENSE)
 
 #### Flutter plugin for using iOS Pencil Kit.
