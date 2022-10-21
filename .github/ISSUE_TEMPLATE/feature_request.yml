@@ -1,0 +1,32 @@
+name: Feature Request 🚀
+description: Record a Feature Request with Flutter PencilKit
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Required information
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Please provide a clear, concise and descriptive explanation of what the feature request is. Include screenshots or a video if needed.
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Additonal information
+
+        Providing as much information as possible greatly helps us with reproducting the issues.
+
+  - type: dropdown
+    id: emulator
+    attributes:
+      label: Device
+      description: How are you running your application?
+      options:
+        - iOS simulator
+        - iPad simulator
+        - iOS Real device
+        - iPad Readl device
