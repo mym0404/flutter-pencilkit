@@ -1,5 +1,5 @@
-name: Todo ✅
-description: Record a Todo with Flutter PencilKit
+name: Feature Request 🚀
+description: Record a Feature Request with Flutter PencilKit
 body:
   - type: markdown
     attributes:
@@ -9,7 +9,7 @@ body:
     id: description
     attributes:
       label: Description
-      description: Please provide a clear, concise and descriptive explanation of what the todo is. Include screenshots or a video if needed.
+      description: Please provide a clear, concise and descriptive explanation of what the feature request is. Include screenshots or a video if needed.
     validations:
       required: true
 
