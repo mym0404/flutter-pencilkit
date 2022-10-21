@@ -1,8 +1,1 @@
-
-import 'pencil_kit_platform_interface.dart';
-
-class PencilKit {
-  Future<String?> getPlatformVersion() {
-    return PencilKitPlatform.instance.getPlatformVersion();
-  }
-}
+export 'package:pencil_kit/pencil_kit.dart';

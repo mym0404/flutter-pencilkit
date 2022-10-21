@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pencil_kit/pencil_kit_method_channel.dart';
+import 'package:pencil_kit/src/pencil_kit_method_channel.dart';
 
 void main() {
   MethodChannelPencilKit platform = MethodChannelPencilKit();

@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-
 import 'pencil_kit_platform_interface.dart';
 
 /// An implementation of [PencilKitPlatform] that uses method channels.
