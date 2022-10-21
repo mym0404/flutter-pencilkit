@@ -37,7 +37,7 @@ At now, package is very first version. So some feature is missing :)
 ## Setup & Usage 🎉
 
 ```shell
-flutter pub add flutter_pencil_kit
+flutter pub add pencil_kit
 ```
 
 
