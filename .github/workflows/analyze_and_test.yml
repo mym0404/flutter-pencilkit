@@ -25,4 +25,3 @@ jobs:
       - run: flutter test
       - run: flutter test
         working-directory: example
-      - run: flutter pub run tool/prepare_submit.dart
