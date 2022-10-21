@@ -2,7 +2,7 @@
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
 #
 Pod::Spec.new do |s|
-  s.name             = 'flutter_pencil_kit'
+  s.name             = 'pencil_kit'
   s.version          = '0.0.1'
   s.summary          = 'A iOS PencilKit Plugin for Flutter.'
   s.description      = <<-DESC
@@ -15,7 +15,7 @@ A Flutter plugin that provides a iOS PencilKit widget on iOS
   s.source_files = 'Classes/**/*.{h,m,swift}'
   s.public_header_files = 'Classes/**.*.h'
   s.dependency 'Flutter'
-  s.platform = :ios, '13.0'
+  s.platform = :ios, '9.0'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }

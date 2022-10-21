@@ -1,1 +1,1 @@
-export 'package:pencil_kit/pencil_kit.dart';
+export 'src/pencil_kit.dart';
