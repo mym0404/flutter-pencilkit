@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
 A Flutter plugin that provides a iOS PencilKit widget on iOS
                        DESC
   s.homepage         = 'https://github.com/mj-studio-library/flutter-pencilkit'
-  s.license          = { :file => '../LICENSE' }
+  s.license          = { :type => 'MIT', :file => '../LICENSE' }
   s.author           = { 'MJ Studio' => 'mym0404@gmail.com' }
   s.source           = { :http => 'https://github.com/mj-studio-library/flutter-pencilkit' }
   s.source_files = 'Classes/**/*.{h,m,swift}'
