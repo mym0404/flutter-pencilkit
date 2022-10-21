@@ -4,6 +4,9 @@
 
 #### Flutter plugin for using iOS Pencil Kit.
 
+<img src="https://user-images.githubusercontent.com/33388801/197273399-e602b742-87bc-4e59-85fe-76b80915f448.png" width=300/>
+
+
 ### Note 📒
 - This package only provides iOS implementation. If you try use widget of this package other than iOS, you see a Red warning box.
 - iOS Pencil Kit is available from iOS `13.0`
