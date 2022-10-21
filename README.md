@@ -1,8 +1,12 @@
 # Flutter iOS Pencil Kit
 
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 [![licence](https://img.shields.io/badge/licence-MIT-orange.svg)](https://github.com/mj-studio-library/flutter-pencilkit/blob/main/LICENSE)
 
 #### Flutter plugin for using iOS Pencil Kit.
+
+<img src="https://user-images.githubusercontent.com/33388801/197273399-e602b742-87bc-4e59-85fe-76b80915f448.png" width=300/>
+
 
 ### Note 📒
 - This package only provides iOS implementation. If you try use widget of this package other than iOS, you see a Red warning box.
@@ -101,3 +105,25 @@ All the available parameters.
 |------------------------|-----------------------------------------------------------------------------------------------------------|
 | onPencilKitViewCreated | A callback for platform view created. You can store `PencilKitController` from argument of this callback. |
 | hitTestBehavior   | iOS `UIKitView` `hitTestBehavior`                                                                         |
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://www.mjstudio.net/"><img src="https://avatars.githubusercontent.com/u/33388801?v=4?s=100" width="100px;" alt="MJ Studio"/><br /><sub><b>MJ Studio</b></sub></a><br /><a href="#ideas-mym0404" title="Ideas, Planning, & Feedback">🤔</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
