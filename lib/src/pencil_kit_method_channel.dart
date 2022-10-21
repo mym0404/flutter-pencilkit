@@ -6,11 +6,11 @@ import 'pencil_kit_platform_interface.dart';
 class MethodChannelPencilKit extends PencilKitPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final methodChannel = const MethodChannel('pencil_kit');
+  final MethodChannel methodChannel = const MethodChannel('pencil_kit');
 
   @override
   Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
+    final String? version = await methodChannel.invokeMethod<String>('getPlatformVersion');
     return version;
   }
 }

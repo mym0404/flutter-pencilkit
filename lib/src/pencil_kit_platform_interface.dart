@@ -1,5 +1,6 @@
-import 'pencil_kit_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+
+import 'pencil_kit_method_channel.dart';
 
 abstract class PencilKitPlatform extends PlatformInterface {
   /// Constructs a PencilKitPlatform.

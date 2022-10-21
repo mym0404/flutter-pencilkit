@@ -5,7 +5,7 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockPencilKitPlatform with MockPlatformInterfaceMixin implements PencilKitPlatform {
   @override
-  Future<String?> getPlatformVersion() => Future.value('42');
+  Future<String?> getPlatformVersion() => Future<String?>.value('42');
 }
 
 void main() {
