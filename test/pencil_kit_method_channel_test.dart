@@ -4,7 +4,7 @@ import 'package:pencil_kit/src/pencil_kit_method_channel.dart';
 
 void main() {
   final MethodChannelPencilKit platform = MethodChannelPencilKit();
-  const MethodChannel channel = MethodChannel('pencil_kit');
+  const MethodChannel channel = MethodChannel('plugins.mjstudio/flutter_pencil_kit/util');
 
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -18,7 +18,7 @@ void main() {
     channel.setMockMethodCallHandler(null);
   });
 
-  test('getPlatformVersion', () async {
+  test('checkAvailable', () async {
     expect(await platform.checkAvailable(), true);
   });
 }
