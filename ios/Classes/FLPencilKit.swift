@@ -24,22 +24,9 @@ class FLPencilKitFactory: NSObject, FlutterPlatformViewFactory{
 	}
 }
 
-func debugE(_ msg : Any...){
-#if DEBUG
-	if msg.count == 0{
-		print("🧩",msg,"🧩")
-	}else{
-		var msgs = ""
-		for i in msg{
-			msgs += "\(i) "
-		}
-		print("🧩",msgs,"🧩")
-	}
-#endif
-}
 class FLPencilKit: NSObject, FlutterPlatformView {
 	private var _view: UIView
-	private var _methodChannel: FlutterMethodChannel
+	private var methodChannel: FlutterMethodChannel
 	func view() -> UIView { return _view }
 	
 	init(
@@ -48,14 +35,14 @@ class FLPencilKit: NSObject, FlutterPlatformView {
 		arguments args: Any?,
 		binaryMessenger messenger: FlutterBinaryMessenger?
 	) {
+		methodChannel = FlutterMethodChannel(name: "plugins.mjstudio/flutter_pencil_kit_\(viewId)", binaryMessenger: messenger!)
 		if #available(iOS 13.0, *) {
-			_view = PencilKitView(frame: frame)
+			_view = PencilKitView(frame: frame, methodChannel: methodChannel)
 		} else {
 			_view = UIView(frame: frame)
 		}
-		_methodChannel = FlutterMethodChannel(name: "plugins.mjstudio/flutter_pencil_kit_\(viewId)", binaryMessenger: messenger!)
 		super.init()
-		_methodChannel.setMethodCallHandler(onMethodCall)
+		methodChannel.setMethodCallHandler(onMethodCall)
 	}
 	
 	
@@ -73,6 +60,8 @@ class FLPencilKit: NSObject, FlutterPlatformView {
 					pencilKitView.show()
 				case "hide":
 					pencilKitView.hide()
+				case "applyProperties":
+					pencilKitView.applyProperties(properties: call.arguments as! [String : Any?]);
 				default:
 					break
 			}
@@ -93,18 +82,24 @@ fileprivate class PencilKitView: UIView {
 		v.isOpaque = false
 		return v
 	}()
+	private var channel: FlutterMethodChannel
+	private var isFirstShow = true
 	
 	required init?(coder: NSCoder) {
 		fatalError("Not Implemented")
 	}
 	
 	override init(frame: CGRect) {
+		fatalError("Not Implemented")
+	}
+	
+	init(frame: CGRect, methodChannel: FlutterMethodChannel) {
+		channel = methodChannel
 		super.init(frame: frame)
-		
 		if let window = UIApplication.shared.windows.first, let toolPicker = PKToolPicker.shared(for: window){
-			toolPicker.addObserver(canvasView)
+			toolPicker.addObserver(self)
+			toolPicker.setVisible(true, forFirstResponder: canvasView)
 		}
-		
 		// layout
 		self.addSubview(canvasView)
 		NSLayoutConstraint.activate([
@@ -118,7 +113,7 @@ fileprivate class PencilKitView: UIView {
 	deinit {
 		if let window = UIApplication.shared.windows.first, let toolPicker = PKToolPicker.shared(for: window){
 			toolPicker.setVisible(false, forFirstResponder: canvasView)
-			toolPicker.removeObserver(canvasView)
+			toolPicker.removeObserver(self)
 		}
 	}
 	
@@ -132,27 +127,64 @@ fileprivate class PencilKitView: UIView {
 		canvasView.undoManager?.redo()
 	}
 	func show(){
-		if let window = UIApplication.shared.windows.first, let toolPicker = PKToolPicker.shared(for: window) {
-			toolPicker.setVisible(true, forFirstResponder: canvasView)
+		if isFirstShow {
+			canvasView.becomeFirstResponder()
+			canvasView.resignFirstResponder()
 		}
-		canvasView.becomeFirstResponder()
-		canvasView.resignFirstResponder()
 		canvasView.becomeFirstResponder()
 	}
 	func hide(){
-		if let window = UIApplication.shared.windows.first, let toolPicker = PKToolPicker.shared(for: window) {
-			toolPicker.setVisible(false, forFirstResponder: canvasView)
-		}
 		canvasView.resignFirstResponder()
+	}
+	func applyProperties(properties: [String:Any?]) {
+		if let alwaysBounceVertical = properties["alwaysBounceVertical"] as? Bool {
+			canvasView.alwaysBounceVertical = alwaysBounceVertical
+		}
+		if let alwaysBounceHorizontal = properties["alwaysBounceHorizontal"] as? Bool {
+			canvasView.alwaysBounceHorizontal = alwaysBounceHorizontal
+		}
+		if let isRulerActive = properties["isRulerActive"] as? Bool {
+			canvasView.isRulerActive = isRulerActive
+		}
+		if #available(iOS 14.0, *), let drawingPolicy = properties["drawingPolicy"] as? Int {
+			canvasView.drawingPolicy = PKCanvasViewDrawingPolicy.init(rawValue: UInt(drawingPolicy)) ?? .default
+		}
+		if let isOpaque = properties["isOpaque"] as? Bool {
+			canvasView.isOpaque = isOpaque
+		}
+		if let backgroundColor = properties["backgroundColor"] as? Int {
+			canvasView.backgroundColor = UIColor(hex: backgroundColor)
+		}
 	}
 }
 
 @available(iOS 13.0, *)
-extension PencilKitView: PKCanvasViewDelegate{
-	
+extension PencilKitView: PKCanvasViewDelegate, PKToolPickerObserver {
+	func toolPickerVisibilityDidChange(_ toolPicker: PKToolPicker) {
+		if isFirstShow {
+			isFirstShow = false
+			return
+		}
+		channel.invokeMethod("toolPickerVisibilityDidChange", arguments: toolPicker.isVisible)
+	}
+	func toolPickerIsRulerActiveDidChange(_ toolPicker: PKToolPicker) {
+		channel.invokeMethod("toolPickerIsRulerActiveDidChange", arguments: toolPicker.isRulerActive)
+	}
+	func toolPickerFramesObscuredDidChange(_ toolPicker: PKToolPicker) {
+		
+	}
+	func toolPickerSelectedToolDidChange(_ toolPicker: PKToolPicker) {
+		
+	}
 }
 
-@available(iOS 13.0, *)
-extension PencilKitView: PKToolPickerObserver{
-	
+extension UIColor {
+	convenience init(hex: Int) {
+		let alpha = Double((hex >> 24) & 0xff) / 255
+		let red = Double((hex >> 16) & 0xff) / 255
+		let green = Double((hex >> 8) & 0xff) / 255
+		let blue = Double((hex >> 0) & 0xff) / 255
+		
+		self.init(red: red, green: green, blue: blue, alpha: alpha)
+	}
 }

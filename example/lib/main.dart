@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pencil_kit/pencil_kit.dart';
 
@@ -44,11 +45,24 @@ class _MyAppState extends State<MyApp> {
             ),
           ],
         ),
-        body: Container(
-          color: Colors.blueAccent.withOpacity(0.2),
-          child: PencilKit(
-            onPencilKitViewCreated: (controller) => this.controller = controller,
-          ),
+        body: PencilKit(
+          onPencilKitViewCreated: (controller) => this.controller = controller,
+          alwaysBounceVertical: false,
+          alwaysBounceHorizontal: true,
+          isRulerActive: false,
+          drawingPolicy: PencilKitIos14DrawingPolicy.anyInput,
+          onRulerActiveChanged: (isRulerActive) {
+            if (kDebugMode) {
+              print('isRulerActive $isRulerActive');
+            }
+          },
+          onToolPickerVisibilityChanged: (isVisible) {
+            if (kDebugMode) {
+              print('isVisible $isVisible');
+            }
+          },
+          backgroundColor: Colors.blue.withOpacity(0.1),
+          isOpaque: false,
         ),
       ),
     );
