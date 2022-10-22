@@ -21,4 +21,10 @@ void main(List<String> args) {
     throw Exception(
         'pubspec version ($pubspecVersion) and tag version ($tagVersion) are different');
   }
+
+  String changeLog = File('CHANGELOG.md').readAsStringSync();
+  if (!changeLog.startsWith('## $tagVersion')) {
+    throw Exception(
+        'CHANGELOG.md doesn\'t started with \'## $tagVersion\' tag version ($tagVersion)');
+  }
 }
