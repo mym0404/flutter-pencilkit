@@ -2,7 +2,7 @@ name: pencil_kit
 description: A Flutter plugin that provides a iOS PencilKit widget on iOS.
 repository: https://github.com/mj-studio-library/flutter-pencilkit
 homepage: https://github.com/mj-studio-library/flutter-pencilkit
-version: 0.0.4
+version: 1.0.0
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
