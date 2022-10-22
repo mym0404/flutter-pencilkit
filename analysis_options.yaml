@@ -53,6 +53,7 @@ analyzer:
     - 'lib/src/generated/*.dart'
     - '**/*.mocks.dart' # Mockito @GenerateMocks
     - '**/*.pigeon.dart' # Pigeon generated file
+    - 'tool/**/*.dart' # helper tool scripts
 
 linter:
   rules:
