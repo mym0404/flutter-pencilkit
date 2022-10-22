@@ -11,11 +11,9 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-      - run: flutter pub get
-      - run: flutter pub run tool/publish/check_version.dart ${GITHUB_REF}
       - run: flutter analyze
       - name: 'pencil-kit'
-          uses: k-paxian/dart-package-publisher@master
-          with:
-            accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
-            refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
+        uses: k-paxian/dart-package-publisher@master
+        with:
+          accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
