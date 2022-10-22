@@ -17,7 +17,7 @@ jobs:
         run: flutter analyze
       - name: Setup credentials
         run: |
-          cat <<EOF > $PUB_CACHE/credentials.json
+          cat <<EOF > ~/.pub-cache/credentials.json
           {
             "accessToken":"${{ secrets.OAUTH_ACCESS_TOKEN }}",
             "refreshToken":"${{ secrets.OAUTH_REFRESH_TOKEN }}",
