@@ -97,6 +97,7 @@ fileprivate class PencilKitView: UIView {
 		channel = methodChannel
 		super.init(frame: frame)
 		if let window = UIApplication.shared.windows.first, let toolPicker = PKToolPicker.shared(for: window){
+			toolPicker.addObserver(canvasView)
 			toolPicker.addObserver(self)
 			toolPicker.setVisible(true, forFirstResponder: canvasView)
 		}
@@ -113,6 +114,7 @@ fileprivate class PencilKitView: UIView {
 	deinit {
 		if let window = UIApplication.shared.windows.first, let toolPicker = PKToolPicker.shared(for: window){
 			toolPicker.setVisible(false, forFirstResponder: canvasView)
+			toolPicker.removeObserver(canvasView)
 			toolPicker.removeObserver(self)
 		}
 	}
@@ -159,7 +161,7 @@ fileprivate class PencilKitView: UIView {
 }
 
 @available(iOS 13.0, *)
-extension PencilKitView: PKCanvasViewDelegate, PKToolPickerObserver {
+extension PencilKitView: PKCanvasViewDelegate {
 	func toolPickerVisibilityDidChange(_ toolPicker: PKToolPicker) {
 		if isFirstShow {
 			isFirstShow = false
@@ -176,6 +178,11 @@ extension PencilKitView: PKCanvasViewDelegate, PKToolPickerObserver {
 	func toolPickerSelectedToolDidChange(_ toolPicker: PKToolPicker) {
 		
 	}
+}
+
+@available(iOS 13.0, *)
+extension PencilKitView: PKToolPickerObserver {
+
 }
 
 extension UIColor {
