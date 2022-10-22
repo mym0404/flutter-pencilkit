@@ -75,7 +75,10 @@ class PencilKit extends StatefulWidget {
   /// The view’s background color. The default is transparent
   final Color? backgroundColor;
 
+  /// A callback for ruler activate state changed
   final void Function(bool isRulerActive)? onRulerActiveChanged;
+
+  /// A callback for tool picker visibility state changed
   final void Function(bool isVisible)? onToolPickerVisibilityChanged;
 
   @override
