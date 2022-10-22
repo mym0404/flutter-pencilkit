@@ -86,7 +86,7 @@ class PencilKit extends StatefulWidget {
 }
 
 class _PencilKitState extends State<PencilKit> {
-  late final PencilKitController _controller;
+  PencilKitController? _controller;
 
   bool _isAvailableChecked = false;
   bool _isAvailable = false;
@@ -108,12 +108,12 @@ class _PencilKitState extends State<PencilKit> {
   @override
   void didUpdateWidget(covariant PencilKit oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _controller._updateWidget(widget);
+    _controller?._updateWidget(widget);
   }
 
   void _onPencilKitPlatformViewCreated(int viewId) {
     _controller = PencilKitController._(widget: widget, viewId: viewId);
-    widget.onPencilKitViewCreated?.call(_controller);
+    widget.onPencilKitViewCreated?.call(_controller!);
   }
 
   Widget _buildUnAvailable() =>

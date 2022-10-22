@@ -1,3 +1,9 @@
+## 1.0.1
+
+Date: `2022-10-23`
+
+* Delay controller initialization
+
 ## 1.0.0
 
 Date: `2022-10-23`
