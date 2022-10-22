@@ -4,7 +4,7 @@ on:
     tags:
       - v*
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,6 +17,7 @@ jobs:
         run: flutter analyze
       - name: Setup credentials
         run: |
+          mkdir -p ~/.pub-cache
           cat <<EOF > ~/.pub-cache/credentials.json
           {
             "accessToken":"${{ secrets.OAUTH_ACCESS_TOKEN }}",
