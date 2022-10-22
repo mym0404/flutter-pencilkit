@@ -51,7 +51,7 @@ class FLPencilKit: NSObject, FlutterPlatformView {
 		if #available(iOS 13.0, *) {
 			_view = PencilKitView(frame: frame)
 		} else {
-			_view = createPencilKitUnAvailablView(frame: frame)
+			_view = UIView(frame: frame)
 		}
 		_methodChannel = FlutterMethodChannel(name: "plugins.mjstudio/flutter_pencil_kit_\(viewId)", binaryMessenger: messenger!)
 		super.init()
@@ -103,7 +103,6 @@ fileprivate class PencilKitView: UIView {
 		
 		if let window = UIApplication.shared.windows.first, let toolPicker = PKToolPicker.shared(for: window){
 			toolPicker.addObserver(canvasView)
-			toolPicker.setVisible(true, forFirstResponder: canvasView)
 		}
 		
 		// layout
@@ -135,7 +134,6 @@ fileprivate class PencilKitView: UIView {
 	func show(){
 		if let window = UIApplication.shared.windows.first, let toolPicker = PKToolPicker.shared(for: window) {
 			toolPicker.setVisible(true, forFirstResponder: canvasView)
-			debugE("setVisible true")
 		}
 		canvasView.becomeFirstResponder()
 		canvasView.resignFirstResponder()
@@ -158,22 +156,3 @@ extension PencilKitView: PKCanvasViewDelegate{
 extension PencilKitView: PKToolPickerObserver{
 	
 }
-
-fileprivate func createPencilKitUnAvailablView(frame: CGRect) -> UIView {
-	let view = UIView(frame: frame)
-	view.backgroundColor = UIColor.red
-	
-	let label = UILabel()
-	label.text = "PencilKit is available from iOS 13.0"
-	label.textColor = UIColor.white
-	label.translatesAutoresizingMaskIntoConstraints = false
-	view.addSubview(label)
-	
-	NSLayoutConstraint.activate([
-		label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-		label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-	])
-	
-	return view
-}
-

@@ -2,15 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'pencil_kit_platform_interface.dart';
 
-/// An implementation of [PencilKitPlatform] that uses method channels.
 class MethodChannelPencilKit extends PencilKitPlatform {
-  /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final MethodChannel methodChannel = const MethodChannel('pencil_kit');
+  final MethodChannel _channel = const MethodChannel('plugins.mjstudio/flutter_pencil_kit/util');
 
   @override
-  Future<String?> getPlatformVersion() async {
-    final String? version = await methodChannel.invokeMethod<String>('getPlatformVersion');
-    return version;
+  Future<bool> checkAvailable() async {
+    return await _channel.invokeMethod('checkAvailable') as bool;
   }
 }

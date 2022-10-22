@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+
+import '../pencil_kit.dart';
 
 /// Optional callback invoked when a web view is first created. [controller] is
 /// the [PencilKitController] for the created pencil kit view.
@@ -14,19 +15,36 @@ class PencilKit extends StatefulWidget {
     super.key,
     this.hitTestBehavior,
     this.onPencilKitViewCreated,
+    this.unAvailableFallback,
   });
 
   final PlatformViewHitTestBehavior? hitTestBehavior;
   final PencilKitViewCreatedCallback? onPencilKitViewCreated;
+  final Widget? unAvailableFallback;
 
   @override
   State<PencilKit> createState() => _PencilKitState();
 }
 
 class _PencilKitState extends State<PencilKit> {
-  bool get _isIOS => defaultTargetPlatform == TargetPlatform.iOS;
-
   late final PencilKitController _controller;
+
+  bool _isAvailableChecked = false;
+  bool _isAvailable = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    PencilKitUtil.checkAvailable().then((bool available) {
+      if (mounted) {
+        setState(() {
+          _isAvailableChecked = true;
+          _isAvailable = available;
+        });
+      }
+    });
+  }
 
   @override
   void didUpdateWidget(covariant PencilKit oldWidget) {
@@ -34,9 +52,28 @@ class _PencilKitState extends State<PencilKit> {
     _controller._updateWidget(widget);
   }
 
+  void _onPencilKitPlatformViewCreated(int viewId) {
+    _controller = PencilKitController._(widget: widget, viewId: viewId);
+    widget.onPencilKitViewCreated?.call(_controller);
+  }
+
+  Widget _buildUnAvailable() =>
+      widget.unAvailableFallback ??
+      Container(
+        color: Colors.red,
+        child: const Center(
+          child: Text(
+              'You cannot render PencilKit widget. The platform is not iOS or OS version is lower than 13.0.'),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
-    if (_isIOS) {
+    if (!_isAvailableChecked) {
+      return const SizedBox.shrink();
+    }
+
+    if (_isAvailable) {
       return UiKitView(
         viewType: 'plugins.mjstudio/flutter_pencil_kit',
         creationParamsCodec: const StandardMessageCodec(),
@@ -44,18 +81,8 @@ class _PencilKitState extends State<PencilKit> {
         hitTestBehavior: widget.hitTestBehavior ?? PlatformViewHitTestBehavior.opaque,
       );
     } else {
-      return Container(
-        color: Colors.red,
-        child: const Center(
-          child: Text('You cannot render PencilKit widget except iOS platform'),
-        ),
-      );
+      return _buildUnAvailable();
     }
-  }
-
-  void _onPencilKitPlatformViewCreated(int viewId) {
-    _controller = PencilKitController._(widget: widget, viewId: viewId);
-    widget.onPencilKitViewCreated?.call(_controller);
   }
 }
 
