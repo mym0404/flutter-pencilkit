@@ -1,3 +1,8 @@
+## 1.0.3
+
+* remove `onToolPickerVisibilityChanged` parameter
+* fix tool picker is not shown at first `show()` call
+
 ## 1.0.2
 
 * Fix tool connection is missing
