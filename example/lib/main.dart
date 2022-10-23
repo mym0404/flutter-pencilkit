@@ -51,6 +51,11 @@ class _MyAppState extends State<MyApp> {
           alwaysBounceHorizontal: true,
           isRulerActive: false,
           drawingPolicy: PencilKitIos14DrawingPolicy.anyInput,
+          onToolPickerVisibilityChanged: (isVisible) {
+            if (kDebugMode) {
+              print('isToolPickerVisible $isVisible');
+            }
+          },
           onRulerActiveChanged: (isRulerActive) {
             if (kDebugMode) {
               print('isRulerActive $isRulerActive');

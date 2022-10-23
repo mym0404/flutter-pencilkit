@@ -82,7 +82,22 @@ fileprivate class PencilKitView: UIView {
 		v.isOpaque = false
 		return v
 	}()
-	private var channel: FlutterMethodChannel
+	private var toolPickerForIos14: PKToolPicker? = nil
+	private var toolPicker: PKToolPicker? {
+		get {
+			if #available(iOS 14.0, *) {
+				if toolPickerForIos14 == nil {
+					toolPickerForIos14 = PKToolPicker()
+				}
+				return toolPickerForIos14!
+			} else {
+				guard let window = UIApplication.shared.windows.first, let toolPicker = PKToolPicker.shared(for: window) else { return nil }
+				return toolPicker;
+			}
+		}
+	}
+	
+	private let channel: FlutterMethodChannel
 	
 	required init?(coder: NSCoder) {
 		fatalError("Not Implemented")
@@ -95,11 +110,7 @@ fileprivate class PencilKitView: UIView {
 	init(frame: CGRect, methodChannel: FlutterMethodChannel) {
 		channel = methodChannel
 		super.init(frame: frame)
-		if let window = UIApplication.shared.windows.first, let toolPicker = PKToolPicker.shared(for: window){
-			toolPicker.addObserver(canvasView)
-			toolPicker.addObserver(self)
-			toolPicker.setVisible(true, forFirstResponder: canvasView)
-		}
+
 		// layout
 		self.addSubview(canvasView)
 		NSLayoutConstraint.activate([
@@ -108,14 +119,15 @@ fileprivate class PencilKitView: UIView {
 			canvasView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
 			canvasView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
 		])
+		
+		toolPicker?.addObserver(canvasView)
+		toolPicker?.addObserver(self)
+		toolPicker?.setVisible(true, forFirstResponder: canvasView)
 	}
 	
 	deinit {
-		if let window = UIApplication.shared.windows.first, let toolPicker = PKToolPicker.shared(for: window){
-			toolPicker.setVisible(false, forFirstResponder: canvasView)
-			toolPicker.removeObserver(canvasView)
-			toolPicker.removeObserver(self)
-		}
+		toolPicker?.removeObserver(canvasView)
+		toolPicker?.removeObserver(self)
 	}
 	
 	func clear(){
@@ -128,8 +140,6 @@ fileprivate class PencilKitView: UIView {
 		canvasView.undoManager?.redo()
 	}
 	func show(){
-		canvasView.becomeFirstResponder()
-		canvasView.resignFirstResponder()
 		canvasView.becomeFirstResponder()
 	}
 	func hide(){
@@ -161,6 +171,9 @@ fileprivate class PencilKitView: UIView {
 extension PencilKitView: PKCanvasViewDelegate {
 	func toolPickerIsRulerActiveDidChange(_ toolPicker: PKToolPicker) {
 		channel.invokeMethod("toolPickerIsRulerActiveDidChange", arguments: toolPicker.isRulerActive)
+	}
+	func toolPickerVisibilityDidChange(_ toolPicker: PKToolPicker) {
+		channel.invokeMethod("toolPickerVisibilityDidChange", arguments: toolPicker.isVisible)
 	}
 	func toolPickerFramesObscuredDidChange(_ toolPicker: PKToolPicker) {
 		

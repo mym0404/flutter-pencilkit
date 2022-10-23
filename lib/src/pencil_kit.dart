@@ -41,6 +41,7 @@ class PencilKit extends StatefulWidget {
     this.onRulerActiveChanged,
     this.isOpaque,
     this.backgroundColor,
+    this.onToolPickerVisibilityChanged,
   });
 
   /// {@macro flutter.widgets.AndroidView.hitTestBehavior}
@@ -74,6 +75,9 @@ class PencilKit extends StatefulWidget {
 
   /// The view’s background color. The default is transparent
   final Color? backgroundColor;
+
+  /// A callback for tool picker visibility state changed
+  final void Function(bool isVisible)? onToolPickerVisibilityChanged;
 
   /// A callback for ruler activate state changed
   final void Function(bool isRulerActive)? onRulerActiveChanged;
@@ -149,6 +153,9 @@ class PencilKitController {
             MethodChannel('plugins.mjstudio/flutter_pencil_kit_$viewId') {
     _channel.setMethodCallHandler(
       (MethodCall call) async {
+        if (call.method == 'toolPickerVisibilityDidChange') {
+          widget.onToolPickerVisibilityChanged?.call(call.arguments as bool);
+        }
         if (call.method == 'toolPickerIsRulerActiveDidChange') {
           widget.onRulerActiveChanged?.call(call.arguments as bool);
         }

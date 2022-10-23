@@ -66,6 +66,7 @@ All the available parameters.
 | alwaysBounceHorizontal        | A Boolean value that determines whether bouncing always occurs when horizontal scrolling reaches the end of the content view.  |
 | isRulerActive                 | A Boolean value that indicates whether a ruler view is visible on the canvas.                                                  |
 | drawingPolicy                 | The policy that controls the types of touches allowed when drawing on the canvas. This properties can be applied from iOS 14.0 |
+| onToolPickerVisibilityChanged | A callback for tool picker visibility state changed                                                                            |
 | onRulerActiveChanged          | A callback for ruler activate state changed                                                                                    |
 
 ## Example
