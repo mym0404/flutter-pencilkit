@@ -1,5 +1,8 @@
 # Flutter iOS Pencil Kit
 
+<img width="883" alt="PencilKitMJStudio" src="https://user-images.githubusercontent.com/33388801/197379199-56d74575-6f80-4afe-b916-6b09efc4c256.png">
+
+
 [![](https://github.com/mj-studio-library/flutter-pencilkit/actions/workflows/analyze_and_test.yml/badge.svg?branch=main)](https://github.com/mj-studio-library/flutter-pencilkit)
 [![pub package](https://img.shields.io/pub/v/pencil_kit.svg)](https://pub.dev/packages/pencil_kit)
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-blue.svg?style=flat-square)](#contributors-)
@@ -9,7 +12,7 @@
 
 #### Flutter plugin for using iOS Pencil Kit.
 
-<img src="https://user-images.githubusercontent.com/33388801/197273399-e602b742-87bc-4e59-85fe-76b80915f448.png" width=300/>
+<img src="https://user-images.githubusercontent.com/33388801/197273399-e602b742-87bc-4e59-85fe-76b80915f448.png" width=240/>
 
 
 ### Note 📒
