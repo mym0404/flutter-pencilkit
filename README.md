@@ -64,70 +64,11 @@ All the available parameters.
 | isRulerActive                 | A Boolean value that indicates whether a ruler view is visible on the canvas.                                                  |
 | drawingPolicy                 | The policy that controls the types of touches allowed when drawing on the canvas. This properties can be applied from iOS 14.0 |
 | onRulerActiveChanged          | A callback for ruler activate state changed                                                                                    |
-| onToolPickerVisibilityChanged | A callback for tool picker visibility state changed                                                                            |
 
 ## Example
 
-```dart
-import 'package:pencil_kit/pencil_kit.dart';
+Check example on [pub.dev](https://pub.dev/packages/pencil_kit/example) page or [example project repo](example)
 
-class MyWidgetState extends State<MyWidget> {
-  late final PencilKitController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('PencilKit Example'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.palette),
-              onPressed: () => controller.show(),
-            ),
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () => controller.hide(),
-            ),
-            IconButton(
-              icon: const Icon(Icons.undo),
-              onPressed: () => controller.undo(),
-            ),
-            IconButton(
-              icon: const Icon(Icons.redo),
-              onPressed: () => controller.redo(),
-            ),
-            IconButton(
-              icon: const Icon(Icons.refresh),
-              onPressed: () => controller.clear(),
-            ),
-          ],
-        ),
-        body: PencilKit(
-          onPencilKitViewCreated: (controller) => this.controller = controller,
-          alwaysBounceVertical: false,
-          alwaysBounceHorizontal: true,
-          isRulerActive: false,
-          drawingPolicy: PencilKitIos14DrawingPolicy.anyInput,
-          onRulerActiveChanged: (isRulerActive) {
-            if (kDebugMode) {
-              print('isRulerActive $isRulerActive');
-            }
-          },
-          onToolPickerVisibilityChanged: (isVisible) {
-            if (kDebugMode) {
-              print('isVisible $isVisible');
-            }
-          },
-          backgroundColor: Colors.blue.withOpacity(0.1),
-          isOpaque: false,
-        ),
-      ),
-    );
-  }
-}
-
-```
 
 ## Contributors ✨
 
