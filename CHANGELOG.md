@@ -1,3 +1,9 @@
+## 1.0.4
+
+* restore `onToolPickerVisibilityChanged` parameter
+* fix tool picker is not shown at first `show()` call (regression)
+* initialize each `PKToolPicker` from iOS 14.0
+
 ## 1.0.3
 
 * remove `onToolPickerVisibilityChanged` parameter
