@@ -3,7 +3,9 @@ import 'package:pencil_kit/src/pencil_kit_method_channel.dart';
 import 'package:pencil_kit/src/pencil_kit_platform_interface.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-class MockPencilKitPlatform with MockPlatformInterfaceMixin implements PencilKitPlatform {
+class MockPencilKitPlatform
+    with MockPlatformInterfaceMixin
+    implements PencilKitPlatform {
   @override
   Future<bool> checkAvailable() => Future<bool>.value(true);
 }

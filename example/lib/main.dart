@@ -56,11 +56,6 @@ class _MyAppState extends State<MyApp> {
               print('isRulerActive $isRulerActive');
             }
           },
-          onToolPickerVisibilityChanged: (isVisible) {
-            if (kDebugMode) {
-              print('isVisible $isVisible');
-            }
-          },
           backgroundColor: Colors.blue.withOpacity(0.1),
           isOpaque: false,
         ),

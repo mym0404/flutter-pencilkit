@@ -8,7 +8,8 @@ import '../pencil_kit.dart';
 
 /// Optional callback invoked when a web view is first created. [controller] is
 /// the [PencilKitController] for the created pencil kit view.
-typedef PencilKitViewCreatedCallback = void Function(PencilKitController controller);
+typedef PencilKitViewCreatedCallback = void Function(
+    PencilKitController controller);
 
 enum PencilKitIos14DrawingPolicy {
   /// if a `PKToolPicker` is visible, respect `UIPencilInteraction.prefersPencilOnlyDrawing`,
@@ -38,7 +39,6 @@ class PencilKit extends StatefulWidget {
     this.isRulerActive,
     this.drawingPolicy,
     this.onRulerActiveChanged,
-    this.onToolPickerVisibilityChanged,
     this.isOpaque,
     this.backgroundColor,
   });
@@ -77,9 +77,6 @@ class PencilKit extends StatefulWidget {
 
   /// A callback for ruler activate state changed
   final void Function(bool isRulerActive)? onRulerActiveChanged;
-
-  /// A callback for tool picker visibility state changed
-  final void Function(bool isVisible)? onToolPickerVisibilityChanged;
 
   @override
   State<PencilKit> createState() => _PencilKitState();
@@ -137,7 +134,8 @@ class _PencilKitState extends State<PencilKit> {
         viewType: 'plugins.mjstudio/flutter_pencil_kit',
         creationParamsCodec: const StandardMessageCodec(),
         onPlatformViewCreated: _onPencilKitPlatformViewCreated,
-        hitTestBehavior: widget.hitTestBehavior ?? PlatformViewHitTestBehavior.opaque,
+        hitTestBehavior:
+            widget.hitTestBehavior ?? PlatformViewHitTestBehavior.opaque,
       );
     } else {
       return _buildUnAvailable();
@@ -147,12 +145,10 @@ class _PencilKitState extends State<PencilKit> {
 
 class PencilKitController {
   PencilKitController._({required int viewId, required this.widget})
-      : _channel = MethodChannel('plugins.mjstudio/flutter_pencil_kit_$viewId') {
+      : _channel =
+            MethodChannel('plugins.mjstudio/flutter_pencil_kit_$viewId') {
     _channel.setMethodCallHandler(
       (MethodCall call) async {
-        if (call.method == 'toolPickerVisibilityDidChange') {
-          widget.onToolPickerVisibilityChanged?.call(call.arguments as bool);
-        }
         if (call.method == 'toolPickerIsRulerActiveDidChange') {
           widget.onRulerActiveChanged?.call(call.arguments as bool);
         }

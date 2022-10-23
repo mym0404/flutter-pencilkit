@@ -83,7 +83,6 @@ fileprivate class PencilKitView: UIView {
 		return v
 	}()
 	private var channel: FlutterMethodChannel
-	private var isFirstShow = true
 	
 	required init?(coder: NSCoder) {
 		fatalError("Not Implemented")
@@ -129,10 +128,8 @@ fileprivate class PencilKitView: UIView {
 		canvasView.undoManager?.redo()
 	}
 	func show(){
-		if isFirstShow {
-			canvasView.becomeFirstResponder()
-			canvasView.resignFirstResponder()
-		}
+		canvasView.becomeFirstResponder()
+		canvasView.resignFirstResponder()
 		canvasView.becomeFirstResponder()
 	}
 	func hide(){
@@ -162,13 +159,6 @@ fileprivate class PencilKitView: UIView {
 
 @available(iOS 13.0, *)
 extension PencilKitView: PKCanvasViewDelegate {
-	func toolPickerVisibilityDidChange(_ toolPicker: PKToolPicker) {
-		if isFirstShow {
-			isFirstShow = false
-			return
-		}
-		channel.invokeMethod("toolPickerVisibilityDidChange", arguments: toolPicker.isVisible)
-	}
 	func toolPickerIsRulerActiveDidChange(_ toolPicker: PKToolPicker) {
 		channel.invokeMethod("toolPickerIsRulerActiveDidChange", arguments: toolPicker.isRulerActive)
 	}
@@ -182,7 +172,7 @@ extension PencilKitView: PKCanvasViewDelegate {
 
 @available(iOS 13.0, *)
 extension PencilKitView: PKToolPickerObserver {
-
+	
 }
 
 extension UIColor {

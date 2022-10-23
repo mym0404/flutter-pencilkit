@@ -15,6 +15,8 @@ jobs:
       - run: flutter pub run tool/publish/check_version.dart ${GITHUB_REF}
       - name: Analyze
         run: flutter analyze
+      - name: Format
+        run: flutter format --set-exit-if-changed .
       - name: Setup credentials
         run: |
           mkdir -p ~/.pub-cache
