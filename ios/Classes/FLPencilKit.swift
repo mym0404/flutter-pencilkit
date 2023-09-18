@@ -149,6 +149,12 @@ fileprivate class PencilKitView: UIView {
 	func hide(){
 		canvasView.resignFirstResponder()
 	}
+    func save() -> PKDrawing?{
+        return canvasView.drawing
+    }
+    func export() -> String?{
+        return canvasView.drawing.dataRepresentation().base64EncodedString()
+    }
 	func applyProperties(properties: [String:Any?]) {
 		if let alwaysBounceVertical = properties["alwaysBounceVertical"] as? Bool {
 			canvasView.alwaysBounceVertical = alwaysBounceVertical
