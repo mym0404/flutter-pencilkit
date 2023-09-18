@@ -156,9 +156,8 @@ class _PencilKitState extends State<PencilKit> {
 }
 
 class PencilKitController {
-  PencilKitController._({required int viewId, required this.widget})
-      : _channel =
-            MethodChannel('plugins.mjstudio/flutter_pencil_kit_$viewId') {
+  PencilKitController._({required this.viewId, required this.widget})
+      : _channel = MethodChannel('plugins.mjstudio/flutter_pencil_kit_$viewId') {
     _channel.setMethodCallHandler(
       (MethodCall call) async {
         if (call.method == 'toolPickerVisibilityDidChange') {
