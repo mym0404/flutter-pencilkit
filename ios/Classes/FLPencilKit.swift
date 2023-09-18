@@ -60,6 +60,10 @@ class FLPencilKit: NSObject, FlutterPlatformView {
 					pencilKitView.show()
 				case "hide":
 					pencilKitView.hide()
+				case "save":
+					pencilKitView.save()
+				case "export":
+					pencilKitView.export()
 				case "applyProperties":
 					pencilKitView.applyProperties(properties: call.arguments as! [String : Any?]);
 				default:

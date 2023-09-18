@@ -90,7 +90,7 @@ class _MyAppState extends State<MyApp> {
                             Icons.save,
                             color: Colors.black,
                           ),
-                          onPressed: () => controller.clear(),
+                          onPressed: () => controller.save(),
                         ),
                         // export button
                         IconButton(
@@ -98,7 +98,7 @@ class _MyAppState extends State<MyApp> {
                             Icons.download,
                             color: Colors.black,
                           ),
-                          onPressed: () => controller.clear(),
+                          onPressed: () => controller.export(),
                         ),
                       ],
                     ),

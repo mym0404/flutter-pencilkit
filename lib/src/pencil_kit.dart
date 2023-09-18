@@ -42,6 +42,8 @@ class PencilKit extends StatefulWidget {
     this.isOpaque,
     this.backgroundColor,
     this.onToolPickerVisibilityChanged,
+    // this.onTapSaveCallback,
+    this.onTapExportCallback,
   });
 
   /// {@macro flutter.widgets.AndroidView.hitTestBehavior}
@@ -82,6 +84,12 @@ class PencilKit extends StatefulWidget {
   /// A callback for ruler activate state changed
   final void Function(bool isRulerActive)? onRulerActiveChanged;
 
+  /// A callback for save feature when save button clicked
+  // final void Function()? onTapSaveCallback;
+
+  /// A callback for export feature when export button clicked
+  final void Function()? onTapExportCallback;
+
   @override
   State<PencilKit> createState() => _PencilKitState();
 }
@@ -109,7 +117,7 @@ class _PencilKitState extends State<PencilKit> {
   @override
   void didUpdateWidget(covariant PencilKit oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _controller?._updateWidget(widget);
+    _controller?._updateWidget(widget, _controller!.viewId);
   }
 
   void _onPencilKitPlatformViewCreated(int viewId) {
@@ -164,10 +172,12 @@ class PencilKitController {
     _applyProperties();
   }
   final MethodChannel _channel;
+  int viewId;
   PencilKit widget;
 
-  void _updateWidget(PencilKit widget) {
+  void _updateWidget(PencilKit widget, int viewId) {
     this.widget = widget;
+    this.viewId = viewId;
     _applyProperties();
   }
 
@@ -192,4 +202,8 @@ class PencilKitController {
   Future<void> show() => _channel.invokeMethod('show');
 
   Future<void> hide() => _channel.invokeMethod('hide');
+
+  Future<void> save() => _channel.invokeMethod('save');
+
+  Future<void> export() => _channel.invokeMethod('export', [viewId]);
 }
