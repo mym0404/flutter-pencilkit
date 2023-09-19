@@ -8,8 +8,7 @@ import '../pencil_kit.dart';
 
 /// Optional callback invoked when a web view is first created. [controller] is
 /// the [PencilKitController] for the created pencil kit view.
-typedef PencilKitViewCreatedCallback = void Function(
-    PencilKitController controller);
+typedef PencilKitViewCreatedCallback = void Function(PencilKitController controller);
 
 enum PencilKitIos14DrawingPolicy {
   /// if a `PKToolPicker` is visible, respect `UIPencilInteraction.prefersPencilOnlyDrawing`,
@@ -130,8 +129,7 @@ class _PencilKitState extends State<PencilKit> {
       Container(
         color: Colors.red,
         child: const Center(
-          child: Text(
-              'You cannot render PencilKit widget. The platform is not iOS or OS version is lower than 13.0.'),
+          child: Text('You cannot render PencilKit widget. The platform is not iOS or OS version is lower than 13.0.'),
         ),
       );
 
@@ -146,8 +144,7 @@ class _PencilKitState extends State<PencilKit> {
         viewType: 'plugins.mjstudio/flutter_pencil_kit',
         creationParamsCodec: const StandardMessageCodec(),
         onPlatformViewCreated: _onPencilKitPlatformViewCreated,
-        hitTestBehavior:
-            widget.hitTestBehavior ?? PlatformViewHitTestBehavior.opaque,
+        hitTestBehavior: widget.hitTestBehavior ?? PlatformViewHitTestBehavior.opaque,
       );
     } else {
       return _buildUnAvailable();
@@ -202,7 +199,9 @@ class PencilKitController {
 
   Future<void> hide() => _channel.invokeMethod('hide');
 
-  Future<void> save() => _channel.invokeMethod('save');
+  Future<dynamic> getSavedData() => _channel.invokeMethod('getSavedData');
 
-  Future<void> export() => _channel.invokeMethod('export', [viewId]);
+  Future<void> reload(dynamic drawingData) => _channel.invokeMethod('reload', [drawingData]);
+
+  Future<void> export(dynamic drawingData) => _channel.invokeMethod('export', [drawingData]);
 }
