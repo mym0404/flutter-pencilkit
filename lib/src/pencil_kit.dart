@@ -199,9 +199,9 @@ class PencilKitController {
 
   Future<void> hide() => _channel.invokeMethod('hide');
 
-  Future<dynamic> getSavedData() => _channel.invokeMethod('getSavedData');
+  Future<String?> getSavedData() => _channel.invokeMethod('getSavedData');
 
-  Future<void> reload(dynamic drawingData) => _channel.invokeMethod('reload', [drawingData]);
+  Future<void> reload(String? drawingData) => _channel.invokeMethod('reload', [drawingData]);
 
-  Future<void> export(dynamic drawingData) => _channel.invokeMethod('export', [drawingData]);
+  Future<String?> export(String? drawingData) => _channel.invokeMethod('export', [drawingData]);
 }

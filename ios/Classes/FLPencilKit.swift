@@ -63,9 +63,9 @@ class FLPencilKit: NSObject, FlutterPlatformView {
 				case "getSavedData":
 					pencilKitView.getDrawingData()
                 case "reload":
-                    pencilKitView.reloadDrawingData(drawingData: call.arguments as! PKDrawing?)
+                    pencilKitView.reloadDrawingData(drawingData: call.arguments as! String?)
 				case "export":
-					pencilKitView.exportDrawingData()
+					pencilKitView.exportDrawingData(drawingData: call.arguments as! String?)
 				case "applyProperties":
 					pencilKitView.applyProperties(properties: call.arguments as! [String : Any?]);
 				default:
@@ -151,8 +151,15 @@ fileprivate class PencilKitView: UIView {
 	func hide(){
 		canvasView.resignFirstResponder()
 	}
-    func getDrawingData() -> String{
-        return canvasView.drawing.dataRepresentation().base64EncodedString()
+    func getDrawingData() -> String? {
+        if (canvasView.drawing.bounds.isEmpty) {
+            print("canvasView.drawing == null")
+            return nil
+        }
+        else{
+            print("canvasView.drawing == not null")
+            return canvasView.drawing.dataRepresentation().base64EncodedString()
+        }
     }
     func reloadDrawingData(drawingData: String?) {
         if (drawingData == nil) {
