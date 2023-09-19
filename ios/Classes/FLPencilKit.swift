@@ -151,15 +151,20 @@ fileprivate class PencilKitView: UIView {
 	func hide(){
 		canvasView.resignFirstResponder()
 	}
-    func getDrawingData() -> PKDrawing?{
-        return canvasView.drawing
+    func getDrawingData() -> String{
+        return canvasView.drawing.dataRepresentation().base64EncodedString()
     }
-    func reloadDrawingData(drawingData: PKDrawing?) {
+    func reloadDrawingData(drawingData: String?) {
         if (drawingData == nil) {
             canvasView.drawing = PKDrawing()
         }
         else{
-            canvasView.drawing = drawingData!
+            do{
+                canvasView.drawing = try PKDrawing.init(data: drawingData!.data(using: <#T##String.Encoding#>)!)
+            }
+            catch{
+                print("errrrorr")
+            }
         }
         
     }
