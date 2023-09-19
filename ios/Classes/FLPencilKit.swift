@@ -60,12 +60,10 @@ class FLPencilKit: NSObject, FlutterPlatformView {
 					pencilKitView.show()
 				case "hide":
 					pencilKitView.hide()
-				case "getSavedData":
-					pencilKitView.getDrawingData()
+//				case "getSavedData":
+//                    pencilKitView.onTapSaveCallback(call.arguments as! String?)
                 case "reload":
                     pencilKitView.reloadDrawingData(drawingData: call.arguments as! String?)
-				case "export":
-					pencilKitView.exportDrawingData(drawingData: call.arguments as! String?)
 				case "applyProperties":
 					pencilKitView.applyProperties(properties: call.arguments as! [String : Any?]);
 				default:
@@ -151,33 +149,20 @@ fileprivate class PencilKitView: UIView {
 	func hide(){
 		canvasView.resignFirstResponder()
 	}
-    func getDrawingData() -> String? {
-        if (canvasView.drawing.bounds.isEmpty) {
-            print("canvasView.drawing == null")
-            return nil
-        }
-        else{
-            print("canvasView.drawing == not null")
-            return canvasView.drawing.dataRepresentation().base64EncodedString()
-        }
-    }
     func reloadDrawingData(drawingData: String?) {
-        if (drawingData == nil) {
-            canvasView.drawing = PKDrawing()
-        }
-        else{
-            do{
-                canvasView.drawing = try PKDrawing.init(data: drawingData!.data(using: <#T##String.Encoding#>)!)
-            }
-            catch{
-                print("errrrorr")
-            }
-        }
-        
-    }
-    func exportDrawingData() -> String?{
-        return canvasView.drawing.dataRepresentation().base64EncodedString()
-    }
+       if (drawingData == nil) {
+           canvasView.drawing = PKDrawing()
+       }
+       else{
+           do{
+               canvasView.drawing = try PKDrawing.init(data: drawingData!.data(using: <#T##String.Encoding#>)!)
+           }
+           catch{
+               print("errrrorr")
+           }
+       }
+
+   }
 	func applyProperties(properties: [String:Any?]) {
 		if let alwaysBounceVertical = properties["alwaysBounceVertical"] as? Bool {
 			canvasView.alwaysBounceVertical = alwaysBounceVertical
@@ -213,6 +198,9 @@ extension PencilKitView: PKCanvasViewDelegate {
 	}
 	func toolPickerSelectedToolDidChange(_ toolPicker: PKToolPicker) {
 		
+	}
+	func onTapSaveCallback(_ drawingData: String?) {
+        channel.invokeMethod("onTapSaveCallback", arguments: drawingData)
 	}
 }
 

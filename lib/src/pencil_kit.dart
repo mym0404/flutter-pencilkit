@@ -41,8 +41,8 @@ class PencilKit extends StatefulWidget {
     this.isOpaque,
     this.backgroundColor,
     this.onToolPickerVisibilityChanged,
-    // this.onTapSaveCallback,
-    this.onTapExportCallback,
+    this.onTapSaveCallback,
+    // this.onTapExportCallback,
   });
 
   /// {@macro flutter.widgets.AndroidView.hitTestBehavior}
@@ -84,10 +84,10 @@ class PencilKit extends StatefulWidget {
   final void Function(bool isRulerActive)? onRulerActiveChanged;
 
   /// A callback for save feature when save button clicked
-  // final void Function()? onTapSaveCallback;
+  final void Function(String? drawingData)? onTapSaveCallback;
 
   /// A callback for export feature when export button clicked
-  final void Function()? onTapExportCallback;
+  // final void Function()? onTapExportCallback;
 
   @override
   State<PencilKit> createState() => _PencilKitState();
@@ -162,6 +162,9 @@ class PencilKitController {
         }
         if (call.method == 'toolPickerIsRulerActiveDidChange') {
           widget.onRulerActiveChanged?.call(call.arguments as bool);
+        }
+        if (call.method == 'onTapSaveCallback') {
+          widget.onTapSaveCallback?.call(call.arguments as String?);
         }
       },
     );
