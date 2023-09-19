@@ -155,7 +155,7 @@ fileprivate class PencilKitView: UIView {
        }
        else{
            do{
-               canvasView.drawing = try PKDrawing.init(data: drawingData!.data(using: <#T##String.Encoding#>)!)
+               canvasView.drawing = try PKDrawing.init(data: Data(base64Encoded: drawingData!)!)
            }
            catch{
                print("errrrorr")
