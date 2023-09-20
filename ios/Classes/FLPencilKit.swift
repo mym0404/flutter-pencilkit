@@ -60,8 +60,8 @@ class FLPencilKit: NSObject, FlutterPlatformView {
 					pencilKitView.show()
 				case "hide":
 					pencilKitView.hide()
-//				case "getSavedData":
-//                    pencilKitView.onTapSaveCallback(call.arguments as! String?)
+				case "save":
+                pencilKitView.onTapSaveCallback()
                 case "reload":
                     pencilKitView.reloadDrawingData(drawingData: call.arguments as! String?)
 				case "applyProperties":
@@ -199,8 +199,8 @@ extension PencilKitView: PKCanvasViewDelegate {
 	func toolPickerSelectedToolDidChange(_ toolPicker: PKToolPicker) {
 		
 	}
-	func onTapSaveCallback(_ drawingData: String?) {
-        channel.invokeMethod("onTapSaveCallback", arguments: drawingData)
+	func onTapSaveCallback() {
+        channel.invokeMethod("onTapSaveCallback", arguments: canvasView.drawing.dataRepresentation().base64EncodedString())
 	}
 }
 

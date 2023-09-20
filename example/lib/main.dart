@@ -15,6 +15,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late final PencilKitController controller;
+  String? drawingData = null;
 
   @override
   Widget build(BuildContext context) {
@@ -77,11 +78,13 @@ class _MyAppState extends State<MyApp> {
                             Icons.refresh,
                             color: Colors.black,
                           ),
-                          onPressed: () => controller.clear(),
+                          onPressed: () {
+                            controller.clear();
+                          },
                         ),
                       ],
                     ),
-                    // add buttons for new feature - save, export
+                    // add buttons for new feature - save, reload, export
                     Row(
                       children: [
                         // save button
@@ -90,16 +93,28 @@ class _MyAppState extends State<MyApp> {
                             Icons.save,
                             color: Colors.black,
                           ),
-                          onPressed: () => controller.save(),
+                          onPressed: () async {
+                            controller.save();
+                          },
                         ),
-                        // export button
+                        // reload button
                         IconButton(
                           icon: const Icon(
                             Icons.download,
                             color: Colors.black,
                           ),
-                          onPressed: () => controller.export(),
+                          onPressed: () {
+                            controller.reload(drawingData);
+                          },
                         ),
+                        // export button
+                        // IconButton(
+                        //   icon: const Icon(
+                        //     Icons.download,
+                        //     color: Colors.black,
+                        //   ),
+                        //   onPressed: () => controller.export(drawingData),
+                        // ),
                       ],
                     ),
                   ],
@@ -124,6 +139,9 @@ class _MyAppState extends State<MyApp> {
                   },
                   backgroundColor: Colors.white,
                   isOpaque: false,
+                  onTapSaveCallback: (val) {
+                    drawingData = val;
+                  },
                 ),
               ),
             ],

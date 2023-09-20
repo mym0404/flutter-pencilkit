@@ -202,9 +202,9 @@ class PencilKitController {
 
   Future<void> hide() => _channel.invokeMethod('hide');
 
-  Future<String?> getSavedData() => _channel.invokeMethod('getSavedData');
+  Future<void> save() => _channel.invokeMethod('save');
 
-  Future<void> reload(String? drawingData) => _channel.invokeMethod('reload', [drawingData]);
+  Future<void> reload(String? drawingData) => _channel.invokeMethod('reload', drawingData);
 
-  Future<String?> export(String? drawingData) => _channel.invokeMethod('export', [drawingData]);
+  Future<String?> export(String? drawingData) => _channel.invokeMethod('export', drawingData);
 }
