@@ -94,7 +94,7 @@ class _MyAppState extends State<MyApp> {
                             color: Colors.black,
                           ),
                           onPressed: () async {
-                            controller.save(0);
+                            controller.save();
                           },
                         ),
                         // reload button
@@ -139,7 +139,7 @@ class _MyAppState extends State<MyApp> {
                   },
                   backgroundColor: Colors.white,
                   isOpaque: false,
-                  onTapSaveCallback: (val, index) {
+                  onTapSaveCallback: (val) {
                     drawingData = val;
                   },
                 ),
