@@ -84,7 +84,7 @@ class PencilKit extends StatefulWidget {
   final void Function(bool isRulerActive)? onRulerActiveChanged;
 
   /// A callback for save feature when save button clicked
-  final void Function(String? drawingData)? onTapSaveCallback;
+  final void Function(String? drawingData, int index)? onTapSaveCallback;
 
   /// A callback for export feature when export button clicked
   // final void Function()? onTapExportCallback;
@@ -164,7 +164,7 @@ class PencilKitController {
           widget.onRulerActiveChanged?.call(call.arguments as bool);
         }
         if (call.method == 'onTapSaveCallback') {
-          widget.onTapSaveCallback?.call(call.arguments as String?);
+          widget.onTapSaveCallback?.call(call.arguments as String?, call.arguments as int);
         }
       },
     );
