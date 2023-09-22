@@ -8,18 +8,18 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-blue.svg?style=flat-square)](#contributors-)
 [![licence](https://img.shields.io/badge/licence-MIT-blue.svg)](https://github.com/mj-studio-library/flutter-pencilkit/blob/main/LICENSE)
 
-
-
 #### Flutter plugin for using iOS Pencil Kit.
 
 <img src="https://user-images.githubusercontent.com/33388801/197273399-e602b742-87bc-4e59-85fe-76b80915f448.png" width=240/>
 
-
 ### Note 📒
-- This package only provides iOS implementation. If you try use widget of this package other than iOS, you see a Red warning box.
+
+- This package only provides iOS implementation. If you try use widget of this package other than
+  iOS, you see a Red warning box.
 - iOS Pencil Kit is available from iOS `13.0`
 
 ### Supported Platforms 📱
+
 - **iOS**
 
 ### Features & Todo 🌟
@@ -29,10 +29,11 @@
 - [x] Undo/Redo
 - [x] Clear
 - [x] UI properties(background color, scrollability, isOpaque, etc...)
+- [x] Import/Export drawing data
 - [ ] Manage drawing tools programmatically
-- [ ] Import/Export drawing data
 
 ### Requirements ✅
+
 * **iOS**: Deployment target >= `9.0`
 
 ## Setup & Usage 🎉
@@ -42,20 +43,22 @@ flutter pub add pencil_kit
 ```
 
 ## Available Methods
+
 Methods available for `PencilKitController`.
 
-| Method  | Description              |
-|---------|--------------------------|
-| clear() | Clear canvas             |
-| show()  | Show Palette             |
-| hide()  | Hide Palette             |
-| redo()  | Redo last drawing action |
-| undo()  | Undo last drawing action |
-
+| Method  | Description                        | Throws |
+|---------|------------------------------------|--------|
+| clear() | Clear canvas                       | X      |
+| show()  | Show Palette                       | X      |
+| hide()  | Hide Palette                       | X      |
+| redo()  | Redo last drawing action           | X      |
+| undo()  | Undo last drawing action           | X      |
+| save()  | Save drawing data into file system | O      |
+| load()  | Load drawing data from file system | O      |
 
 ## `PencilKit` Widget Parameters
-All the available parameters.
 
+All the available parameters.
 
 | Parameter                     | Description                                                                                                                    |
 |-------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
@@ -71,8 +74,8 @@ All the available parameters.
 
 ## Example
 
-Check example on [pub.dev](https://pub.dev/packages/pencil_kit/example) page or [example project repo](example)
-
+Check example on [pub.dev](https://pub.dev/packages/pencil_kit/example) page
+or [example project repo](example)
 
 ## Contributors ✨
 
@@ -94,4 +97,5 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors)
+specification. Contributions of any kind welcome!
