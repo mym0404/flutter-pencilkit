@@ -1,3 +1,7 @@
+## 1.0.5
+
+* Add `save()`, `load()`
+
 ## 1.0.4
 
 * restore `onToolPickerVisibilityChanged` parameter
