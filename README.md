@@ -46,31 +46,32 @@ flutter pub add pencil_kit
 
 Methods available for `PencilKitController`.
 
-| Method  | Description                        | Throws |
-|---------|------------------------------------|--------|
-| clear() | Clear canvas                       | X      |
-| show()  | Show Palette                       | X      |
-| hide()  | Hide Palette                       | X      |
-| redo()  | Redo last drawing action           | X      |
-| undo()  | Undo last drawing action           | X      |
-| save()  | Save drawing data into file system | O      |
-| load()  | Load drawing data from file system | O      |
+| Method                          | Description                                                                             | Throws |
+|---------------------------------|-----------------------------------------------------------------------------------------|--------|
+| clear()                         | Clear canvas                                                                            | X      |
+| show()                          | Show Palette                                                                            | X      |
+| hide()                          | Hide Palette                                                                            | X      |
+| redo()                          | Redo last drawing action                                                                | X      |
+| undo()                          | Undo last drawing action                                                                | X      |
+| save(): Future<String?>         | Save drawing data into file system, can return base 64 data if `withBase64Data` is true | O      |
+| load(): Future<String?>         | Load drawing data from file system, can return base 64 data if `withBase64Data` is true | O      |
+| getBase64Data(): Future<String> | Get current drawing data as base64 string form                                          | O      |
 
 ## `PencilKit` Widget Parameters
 
 All the available parameters.
 
-| Parameter                     | Description                                                                                                                    |
-|-------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| onPencilKitViewCreated        | A callback for platform view created. You can store `PencilKitController` from argument of this callback.                      |
-| hitTestBehavior               | iOS `UIKitView` `hitTestBehavior`                                                                                              |
-| unAvailableFallback           | A widget for render UnAvailable state. The default is A red box                                                                |
-| alwaysBounceVertical          | A Boolean value that determines whether bouncing always occurs when vertical scrolling reaches the end of the content.         |
-| alwaysBounceHorizontal        | A Boolean value that determines whether bouncing always occurs when horizontal scrolling reaches the end of the content view.  |
-| isRulerActive                 | A Boolean value that indicates whether a ruler view is visible on the canvas.                                                  |
-| drawingPolicy                 | The policy that controls the types of touches allowed when drawing on the canvas. This properties can be applied from iOS 14.0 |
-| onToolPickerVisibilityChanged | A callback for tool picker visibility state changed                                                                            |
-| onRulerActiveChanged          | A callback for ruler activate state changed                                                                                    |
+| Parameter                     | Description                                                                                                                    |     |
+|-------------------------------|--------------------------------------------------------------------------------------------------------------------------------|-----|
+| onPencilKitViewCreated        | A callback for platform view created. You can store `PencilKitController` from argument of this callback.                      |     |
+| hitTestBehavior               | iOS `UIKitView` `hitTestBehavior`                                                                                              |     |
+| unAvailableFallback           | A widget for render UnAvailable state. The default is A red box                                                                |     |
+| alwaysBounceVertical          | A Boolean value that determines whether bouncing always occurs when vertical scrolling reaches the end of the content.         |     |
+| alwaysBounceHorizontal        | A Boolean value that determines whether bouncing always occurs when horizontal scrolling reaches the end of the content view.  |     |
+| isRulerActive                 | A Boolean value that indicates whether a ruler view is visible on the canvas.                                                  |     |
+| drawingPolicy                 | The policy that controls the types of touches allowed when drawing on the canvas. This properties can be applied from iOS 14.0 |     |
+| onToolPickerVisibilityChanged | A callback for tool picker visibility state changed                                                                            |     |
+| onRulerActiveChanged          | A callback for ruler activate state changed                                                                                    |     |
 
 ## Example
 

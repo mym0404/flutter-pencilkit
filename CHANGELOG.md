@@ -1,6 +1,11 @@
+## 1.0.6
+
+* Add parameter `withBase64Data` in `save()` and `load()`
+* Add `getBase64Data()` in controller
+
 ## 1.0.5
 
-* Add `save()`, `load()`
+* Add `save()`, `load()` in controller
 
 ## 1.0.4
 

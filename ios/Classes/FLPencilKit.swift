@@ -79,6 +79,8 @@ class FLPencilKit: NSObject, FlutterPlatformView {
         save(pencilKitView: pencilKitView, call: call, result: result)
       case "load":
         load(pencilKitView: pencilKitView, call: call, result: result)
+      case "getBase64Data":
+        getBase64Data(pencilKitView: pencilKitView, call: call, result: result)
       case "applyProperties":
         pencilKitView.applyProperties(properties: call.arguments as! [String: Any?])
         result(nil)
@@ -91,9 +93,9 @@ class FLPencilKit: NSObject, FlutterPlatformView {
   @available(iOS 13, *)
   private func save(pencilKitView: PencilKitView, call: FlutterMethodCall, result: FlutterResult) {
     do {
-      let url = try parseUrlFromArgument(call.arguments)
-      try pencilKitView.save(url: url)
-      result(url.absoluteString)
+      let (url, withBase64Data) = parseArguments(call.arguments)
+      let base64Data = try pencilKitView.save(url: url, withBase64Data: withBase64Data)
+      result(base64Data)
     } catch {
       result(FlutterError(code: "NATIVE_ERROR", message: error.localizedDescription, details: nil))
     }
@@ -102,35 +104,46 @@ class FLPencilKit: NSObject, FlutterPlatformView {
   @available(iOS 13, *)
   private func load(pencilKitView: PencilKitView, call: FlutterMethodCall, result: FlutterResult) {
     do {
-      let url = try parseUrlFromArgument(call.arguments)
-      try pencilKitView.load(url: url)
-      result(url.absoluteString)
+      let (url, withBase64Data) = parseArguments(call.arguments)
+      let base64Data = try pencilKitView.load(url: url, withBase64Data: withBase64Data)
+      result(base64Data)
     } catch {
       result(FlutterError(code: "NATIVE_ERROR", message: error.localizedDescription, details: nil))
     }
   }
 
-  private func parseUrlFromArgument(_ arguments: Any?) throws -> URL {
-    guard let arguments = arguments as? [String], arguments.count == 1 else {
-      throw FLPencilKitError.invalidArgument
-    }
-    return URL(fileURLWithPath: arguments[0])
+  @available(iOS 13, *)
+  private func getBase64Data(
+    pencilKitView: PencilKitView,
+    call: FlutterMethodCall,
+    result: FlutterResult
+  ) {
+    let base64Data = pencilKitView.getBase64Data()
+    result(base64Data)
+  }
+
+  private func parseArguments(_ arguments: Any?) -> (URL, Bool) {
+    guard let arguments = arguments as? [Any] else { fatalError() }
+    return (URL(fileURLWithPath: arguments[0] as! String), arguments[1] as! Bool)
   }
 }
 
 @available(iOS 13.0, *)
+private func createCanvasView(delegate: PKCanvasViewDelegate) -> PKCanvasView {
+  let v = PKCanvasView()
+  v.translatesAutoresizingMaskIntoConstraints = false
+  v.drawing = PKDrawing()
+  v.delegate = delegate
+  v.alwaysBounceVertical = false
+  v.allowsFingerDrawing = true
+  v.backgroundColor = .clear
+  v.isOpaque = false
+  return v
+}
+
+@available(iOS 13.0, *)
 private class PencilKitView: UIView {
-  private lazy var canvasView: PKCanvasView = {
-    let v = PKCanvasView()
-    v.translatesAutoresizingMaskIntoConstraints = false
-    v.delegate = self
-    v.drawing = PKDrawing()
-    v.alwaysBounceVertical = false
-    v.allowsFingerDrawing = true
-    v.backgroundColor = .clear
-    v.isOpaque = false
-    return v
-  }()
+  private lazy var canvasView: PKCanvasView = createCanvasView(delegate: self)
 
   private var toolPickerForIos14: PKToolPicker? = nil
   private var toolPicker: PKToolPicker? {
@@ -162,6 +175,14 @@ private class PencilKitView: UIView {
     super.init(frame: frame)
 
     // layout
+    layoutCanvasView()
+
+    toolPicker?.addObserver(canvasView)
+    toolPicker?.addObserver(self)
+    toolPicker?.setVisible(true, forFirstResponder: canvasView)
+  }
+
+  private func layoutCanvasView() {
     addSubview(canvasView)
     NSLayoutConstraint.activate([
       canvasView.widthAnchor.constraint(equalTo: widthAnchor),
@@ -169,10 +190,6 @@ private class PencilKitView: UIView {
       canvasView.centerXAnchor.constraint(equalTo: centerXAnchor),
       canvasView.centerYAnchor.constraint(equalTo: centerYAnchor)
     ])
-
-    toolPicker?.addObserver(canvasView)
-    toolPicker?.addObserver(self)
-    toolPicker?.setVisible(true, forFirstResponder: canvasView)
   }
 
   deinit {
@@ -200,15 +217,34 @@ private class PencilKitView: UIView {
     canvasView.resignFirstResponder()
   }
 
-  func save(url: URL) throws {
+  func save(url: URL, withBase64Data: Bool) throws -> String? {
     let data = canvasView.drawing.dataRepresentation()
     try data.write(to: url)
+    if withBase64Data {
+      return data.base64EncodedString()
+    }
+    return nil
   }
 
-  func load(url: URL) throws {
+  func load(url: URL, withBase64Data: Bool) throws -> String? {
     let data = try Data(contentsOf: url)
     let drawing = try PKDrawing(data: data)
-    canvasView.drawing = drawing
+
+    let newCanvasView = createCanvasView(delegate: self)
+    newCanvasView.drawing = drawing
+    canvasView.removeFromSuperview()
+    synchronizeCanvasViewProperties(old: canvasView, new: newCanvasView)
+    canvasView = newCanvasView
+    layoutCanvasView()
+
+    if withBase64Data {
+      return drawing.dataRepresentation().base64EncodedString()
+    }
+    return nil
+  }
+
+  func getBase64Data() -> String {
+    canvasView.drawing.dataRepresentation().base64EncodedString()
   }
 
   func applyProperties(properties: [String: Any?]) {
@@ -230,6 +266,27 @@ private class PencilKitView: UIView {
     }
     if let backgroundColor = properties["backgroundColor"] as? Int {
       canvasView.backgroundColor = UIColor(hex: backgroundColor)
+    }
+  }
+
+  private func synchronizeCanvasViewProperties(old: PKCanvasView, new: PKCanvasView) {
+    if let toolPicker {
+      toolPicker.removeObserver(old)
+      toolPicker.addObserver(new)
+      toolPicker.setVisible(true, forFirstResponder: new)
+    }
+
+    new.alwaysBounceVertical = old.alwaysBounceVertical
+    new.alwaysBounceHorizontal = old.alwaysBounceHorizontal
+    new.isRulerActive = old.isRulerActive
+    if #available(iOS 14.0, *) {
+      new.drawingPolicy = old.drawingPolicy
+    }
+    new.isOpaque = old.isOpaque
+    new.backgroundColor = old.backgroundColor
+
+    if toolPicker?.isVisible == true {
+      new.becomeFirstResponder()
     }
   }
 }

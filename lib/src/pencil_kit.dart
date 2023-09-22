@@ -201,6 +201,7 @@ class PencilKitController {
   /// Save drawing data into file system. The absolute uri of file in filesystem should be retrieved other library like 'path_provider'.
   ///
   /// Throws an [Error] if failed
+  /// Returns base64 data string if `withBase64Data` is true(default: false) or null.
   ///
   /// Example
   ///
@@ -214,12 +215,13 @@ class PencilKitController {
   ///    // handle error
   ///  }
   /// ```
-  Future<dynamic> save({required String uri}) =>
-      _channel.invokeMethod('save', <String>[uri]);
+  Future<String?> save({required String uri, bool withBase64Data = false}) =>
+      _channel.invokeMethod('save', <Object>[uri, withBase64Data]);
 
   /// Load drawing data from file system. The absolute uri of file in filesystem should be retrieved other library like 'path_provider'.
   ///
   /// Throws an [Error] if failed
+  /// Returns base64 data string if `withBase64Data` is true(default: false) or null.
   ///
   /// Example
   ///
@@ -233,6 +235,14 @@ class PencilKitController {
   ///    // handle error
   ///  }
   /// ```
-  Future<dynamic> load({required String uri}) =>
-      _channel.invokeMethod('load', <String>[uri]);
+  Future<String?> load({required String uri, bool withBase64Data = false}) =>
+      _channel.invokeMethod('load', <Object>[uri, withBase64Data]);
+
+  /// Get current drawing data as base 64 encoded form.
+  ///
+  /// Throws an [Error] if failed
+  /// ```
+  Future<String> getBase64Data() async {
+    return await _channel.invokeMethod('getBase64Data') as String;
+  }
 }

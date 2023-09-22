@@ -61,7 +61,11 @@ class _MyAppState extends State<MyApp> {
                         await getApplicationDocumentsDirectory();
                     final String pathToSave = '${documentDir.path}/drawing';
                     try {
-                      await controller.save(uri: pathToSave);
+                      final data = await controller.save(
+                          uri: pathToSave, withBase64Data: true);
+                      if (kDebugMode) {
+                        print(data);
+                      }
                       Fluttertoast.showToast(
                           msg: "Save Success to [$pathToSave]",
                           toastLength: Toast.LENGTH_LONG,
@@ -90,7 +94,11 @@ class _MyAppState extends State<MyApp> {
                         await getApplicationDocumentsDirectory();
                     final String pathToLoad = '${documentDir.path}/drawing';
                     try {
-                      await controller.load(uri: pathToLoad);
+                      final data = await controller.load(
+                          uri: pathToLoad, withBase64Data: true);
+                      if (kDebugMode) {
+                        print(data);
+                      }
                       Fluttertoast.showToast(
                           msg: "Load Success from [$pathToLoad]",
                           toastLength: Toast.LENGTH_LONG,
@@ -111,6 +119,21 @@ class _MyAppState extends State<MyApp> {
                     }
                   },
                   tooltip: "Load",
+                ),
+                IconButton(
+                  icon: const Icon(Icons.print),
+                  onPressed: () async {
+                    final data = await controller.getBase64Data();
+                    Fluttertoast.showToast(
+                        msg: data,
+                        toastLength: Toast.LENGTH_LONG,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.blueAccent,
+                        textColor: Colors.white,
+                        fontSize: 12.0);
+                  },
+                  tooltip: "Get base64 data",
                 ),
               ],
             )),
