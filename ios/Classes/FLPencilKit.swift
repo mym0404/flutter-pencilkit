@@ -28,6 +28,10 @@ class FLPencilKitFactory: NSObject, FlutterPlatformViewFactory {
   }
 }
 
+enum FLPencilKitError: Error {
+  case invalidArgument
+}
+
 class FLPencilKit: NSObject, FlutterPlatformView {
   private var _view: UIView
   private var methodChannel: FlutterMethodChannel
@@ -58,20 +62,59 @@ class FLPencilKit: NSObject, FlutterPlatformView {
       switch call.method {
       case "clear":
         pencilKitView.clear()
+        result(nil)
       case "redo":
         pencilKitView.redo()
+        result(nil)
       case "undo":
         pencilKitView.undo()
+        result(nil)
       case "show":
         pencilKitView.show()
+        result(nil)
       case "hide":
         pencilKitView.hide()
+        result(nil)
+      case "save":
+        save(pencilKitView: pencilKitView, call: call, result: result)
+      case "load":
+        load(pencilKitView: pencilKitView, call: call, result: result)
       case "applyProperties":
         pencilKitView.applyProperties(properties: call.arguments as! [String: Any?])
+        result(nil)
       default:
         break
       }
     }
+  }
+
+  @available(iOS 13, *)
+  private func save(pencilKitView: PencilKitView, call: FlutterMethodCall, result: FlutterResult) {
+    do {
+      let url = try parseUrlFromArgument(call.arguments)
+      try pencilKitView.save(url: url)
+      result(url.absoluteString)
+    } catch {
+      result(FlutterError(code: "NATIVE_ERROR", message: error.localizedDescription, details: nil))
+    }
+  }
+
+  @available(iOS 13, *)
+  private func load(pencilKitView: PencilKitView, call: FlutterMethodCall, result: FlutterResult) {
+    do {
+      let url = try parseUrlFromArgument(call.arguments)
+      try pencilKitView.load(url: url)
+      result(url.absoluteString)
+    } catch {
+      result(FlutterError(code: "NATIVE_ERROR", message: error.localizedDescription, details: nil))
+    }
+  }
+
+  private func parseUrlFromArgument(_ arguments: Any?) throws -> URL {
+    guard let arguments = arguments as? [String], arguments.count == 1 else {
+      throw FLPencilKitError.invalidArgument
+    }
+    return URL(fileURLWithPath: arguments[0])
   }
 }
 
@@ -155,6 +198,17 @@ private class PencilKitView: UIView {
 
   func hide() {
     canvasView.resignFirstResponder()
+  }
+
+  func save(url: URL) throws {
+    let data = canvasView.drawing.dataRepresentation()
+    try data.write(to: url)
+  }
+
+  func load(url: URL) throws {
+    let data = try Data(contentsOf: url)
+    let drawing = try PKDrawing(data: data)
+    canvasView.drawing = drawing
   }
 
   func applyProperties(properties: [String: Any?]) {

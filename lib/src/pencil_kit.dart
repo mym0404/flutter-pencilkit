@@ -8,8 +8,7 @@ import '../pencil_kit.dart';
 
 /// Optional callback invoked when a web view is first created. [controller] is
 /// the [PencilKitController] for the created pencil kit view.
-typedef PencilKitViewCreatedCallback = void Function(
-    PencilKitController controller);
+typedef PencilKitViewCreatedCallback = void Function(PencilKitController controller);
 
 enum PencilKitIos14DrawingPolicy {
   /// if a `PKToolPicker` is visible, respect `UIPencilInteraction.prefersPencilOnlyDrawing`,
@@ -138,8 +137,7 @@ class _PencilKitState extends State<PencilKit> {
         viewType: 'plugins.mjstudio/flutter_pencil_kit',
         creationParamsCodec: const StandardMessageCodec(),
         onPlatformViewCreated: _onPencilKitPlatformViewCreated,
-        hitTestBehavior:
-            widget.hitTestBehavior ?? PlatformViewHitTestBehavior.opaque,
+        hitTestBehavior: widget.hitTestBehavior ?? PlatformViewHitTestBehavior.opaque,
       );
     } else {
       return _buildUnAvailable();
@@ -149,8 +147,7 @@ class _PencilKitState extends State<PencilKit> {
 
 class PencilKitController {
   PencilKitController._({required int viewId, required this.widget})
-      : _channel =
-            MethodChannel('plugins.mjstudio/flutter_pencil_kit_$viewId') {
+      : _channel = MethodChannel('plugins.mjstudio/flutter_pencil_kit_$viewId') {
     _channel.setMethodCallHandler(
       (MethodCall call) async {
         if (call.method == 'toolPickerVisibilityDidChange') {
@@ -183,13 +180,54 @@ class PencilKitController {
     });
   }
 
+  /// Clear all drawing data
   Future<void> clear() => _channel.invokeMethod('clear');
 
+  /// Redo last action on drawing
   Future<void> redo() => _channel.invokeMethod('redo');
 
+  /// Undo last action on drawing
   Future<void> undo() => _channel.invokeMethod('undo');
 
+  /// Show pallete
   Future<void> show() => _channel.invokeMethod('show');
 
+  /// Hide pallete
   Future<void> hide() => _channel.invokeMethod('hide');
+
+  /// Save drawing data into file system. The absolute uri of file in filesystem should be retrieved other library like 'path_provider'.
+  ///
+  /// Throws an [Error] if failed
+  ///
+  /// Example
+  ///
+  /// ```dart
+  ///  final Directory documentDir = await getApplicationDocumentsDirectory();
+  ///  final String pathToSave = '${documentDir.path}/drawing';
+  ///  try {
+  ///    await controller.save(uri: pathToSave);
+  ///    // handle success
+  ///  } catch (e) {
+  ///    // handle error
+  ///  }
+  /// ```
+  Future<dynamic> save({required String uri}) => _channel.invokeMethod('save', [uri]);
+
+  /// Load drawing data from file system. The absolute uri of file in filesystem should be retrieved other library like 'path_provider'.
+  ///
+  /// Throws an [Error] if failed
+  ///
+  /// Example
+  ///
+  /// ```dart
+  ///  final Directory documentDir = await getApplicationDocumentsDirectory();
+  ///  final String pathToLoad = '${documentDir.path}/drawing';
+  ///  try {
+  ///    await controller.load(uri: pathToLoad);
+  ///    // handle success
+  ///  } catch (e) {
+  ///    // handle error
+  ///  }
+  /// ```
+  Future<dynamic> load({required String uri}) => _channel.invokeMethod('load', [uri]);
 }
