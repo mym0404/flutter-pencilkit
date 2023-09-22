@@ -5,8 +5,8 @@ homepage: https://github.com/mj-studio-library/flutter-pencilkit
 version: 1.0.4
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
-  flutter: ">=2.10.0"
+  sdk: '>=2.18.2 <4.0.0'
+  flutter: ">=3.0.0"
 
 flutter:
   plugin:
@@ -17,10 +17,10 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  plugin_platform_interface: ^2.1.3
+  plugin_platform_interface: ^2.1.6
 
 dev_dependencies:
-  flutter_lints: ^2.0.1
+  flutter_lints: ^2.0.3
   flutter_test:
     sdk: flutter
   yaml:
