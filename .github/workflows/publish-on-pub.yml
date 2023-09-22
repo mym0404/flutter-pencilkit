@@ -16,7 +16,7 @@ jobs:
       - name: Analyze
         run: flutter analyze
       - name: Format
-        run: flutter format --set-exit-if-changed .
+        run: dart format --set-exit-if-changed .
       - name: Prepare pub credentials
         run: mkdir -p $XDG_CONFIG_HOME/dart && echo '${{ secrets.PUB_CREDENTIALS }}' > "$XDG_CONFIG_HOME/dart/pub-credentials.json"
       - name: Publish package

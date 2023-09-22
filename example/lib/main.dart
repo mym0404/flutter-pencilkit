@@ -57,7 +57,8 @@ class _MyAppState extends State<MyApp> {
                 IconButton(
                   icon: const Icon(Icons.save),
                   onPressed: () async {
-                    final Directory documentDir = await getApplicationDocumentsDirectory();
+                    final Directory documentDir =
+                        await getApplicationDocumentsDirectory();
                     final String pathToSave = '${documentDir.path}/drawing';
                     try {
                       await controller.save(uri: pathToSave);
@@ -85,7 +86,8 @@ class _MyAppState extends State<MyApp> {
                 IconButton(
                   icon: const Icon(Icons.download),
                   onPressed: () async {
-                    final Directory documentDir = await getApplicationDocumentsDirectory();
+                    final Directory documentDir =
+                        await getApplicationDocumentsDirectory();
                     final String pathToLoad = '${documentDir.path}/drawing';
                     try {
                       await controller.load(uri: pathToLoad);
@@ -114,7 +116,8 @@ class _MyAppState extends State<MyApp> {
             )),
             Expanded(
               child: PencilKit(
-                onPencilKitViewCreated: (controller) => this.controller = controller,
+                onPencilKitViewCreated: (controller) =>
+                    this.controller = controller,
                 alwaysBounceVertical: false,
                 alwaysBounceHorizontal: true,
                 isRulerActive: false,

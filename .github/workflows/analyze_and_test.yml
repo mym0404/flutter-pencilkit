@@ -20,4 +20,5 @@ jobs:
       - run: flutter doctor
       - run: flutter --version
       - run: flutter pub get
+      - run: dart format --set-exit-if-changed .
       - run: flutter analyze
