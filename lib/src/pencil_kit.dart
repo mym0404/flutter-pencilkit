@@ -41,6 +41,8 @@ class PencilKit extends StatefulWidget {
     this.onRulerActiveChanged,
     this.isOpaque,
     this.backgroundColor,
+    this.inkColor,
+    this.inkWidth,
     this.onToolPickerVisibilityChanged,
   });
 
@@ -75,6 +77,12 @@ class PencilKit extends StatefulWidget {
 
   /// The view’s background color. The default is transparent
   final Color? backgroundColor;
+
+  /// The view’s line color. The default is transparent
+  final Color? inkColor;
+
+  /// The view’s line color. The default is transparent
+  final int? inkWidth;
 
   /// A callback for tool picker visibility state changed
   final void Function(bool isVisible)? onToolPickerVisibilityChanged;
@@ -180,6 +188,8 @@ class PencilKitController {
       'drawingPolicy': widget.drawingPolicy?.value,
       'isOpaque': widget.isOpaque,
       'backgroundColor': widget.backgroundColor?.value,
+      'inkColor': widget.inkColor?.value,
+      'inkWidth': widget.inkWidth,
     });
   }
 

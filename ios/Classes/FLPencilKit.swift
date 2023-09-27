@@ -267,6 +267,9 @@ private class PencilKitView: UIView {
     if let backgroundColor = properties["backgroundColor"] as? Int {
       canvasView.backgroundColor = UIColor(hex: backgroundColor)
     }
+    if let inkColor = properties["inkColor"] as? Int,  let inkWidth = properties["inkWidth"] as? Int {
+      canvasView.tool = PKInkingTool(.pen, color: UIColor(hex: inkColor), width: CGFloat(inkWidth))
+    }
   }
 
   private func synchronizeCanvasViewProperties(old: PKCanvasView, new: PKCanvasView) {

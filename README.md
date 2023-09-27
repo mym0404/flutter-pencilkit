@@ -72,6 +72,9 @@ All the available parameters.
 | drawingPolicy                 | The policy that controls the types of touches allowed when drawing on the canvas. This properties can be applied from iOS 14.0 |     |
 | onToolPickerVisibilityChanged | A callback for tool picker visibility state changed                                                                            |     |
 | onRulerActiveChanged          | A callback for ruler activate state changed                                                                                    |     |
+| backgroundColor          | A background color for canvas                                     |     |
+| inkColor          | Creates an ink tool object with the specified color                                                                                    |     |
+| inkWidth          | Creates an ink tool object with the specified width                                                                                    |     |
 
 ## Example
 

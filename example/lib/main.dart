@@ -144,7 +144,7 @@ class _MyAppState extends State<MyApp> {
                 alwaysBounceVertical: false,
                 alwaysBounceHorizontal: true,
                 isRulerActive: false,
-                drawingPolicy: PencilKitIos14DrawingPolicy.anyInput,
+                drawingPolicy: PencilKitIos14DrawingPolicy.onlyPencil,
                 onToolPickerVisibilityChanged: (isVisible) {
                   if (kDebugMode) {
                     print('isToolPickerVisible $isVisible');
@@ -155,7 +155,9 @@ class _MyAppState extends State<MyApp> {
                     print('isRulerActive $isRulerActive');
                   }
                 },
-                backgroundColor: Colors.blue.withOpacity(0.1),
+                backgroundColor: Colors.white,
+                inkColor: Colors.blueAccent,
+                inkWidth: 10,
                 isOpaque: false,
               ),
             ),
