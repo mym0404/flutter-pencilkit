@@ -62,6 +62,14 @@ class FLPencilKit: NSObject, FlutterPlatformView {
 					pencilKitView.hide()
                 case "setPKToolPen":
                     pencilKitView.setPKToolPen()
+                case "setPKToolPencil":
+                    pencilKitView.setPKToolPencil()
+                case "setPKToolMarker":
+                    pencilKitView.setPKToolMarker()
+                case "setPKToolEraserVector":
+                    pencilKitView.setPKToolEraserVector()
+                case "setPKToolEraserBitmap":
+                    pencilKitView.setPKToolEraserBitmap()
 				case "save":
                 pencilKitView.onTapSaveCallback()
                 case "reload":
@@ -153,6 +161,23 @@ fileprivate class PencilKitView: UIView {
 	}
     func setPKToolPen(){
         canvasView.tool = PKInkingTool(.pen, color: .red, width: 2)
+    }
+    func setPKToolPencil(){
+        canvasView.tool = PKInkingTool(.pencil, color: .gray, width: 3)
+    }
+    func setPKToolMarker(){
+        canvasView.tool = PKInkingTool(.marker, color: .yellow, width: 4)
+    }
+//    @available(iOS 16.4, *)
+    func setPKToolEraserVector(){
+        canvasView.tool = PKEraserTool(.vector)
+//        canvasView.tool = PKEraserTool(.vector, width: 2)
+//        toolPicker?.selectedTool = PKEraserTool(.bitmap, width: 4)
+    }
+//    @available(iOS 16.4, *)
+    func setPKToolEraserBitmap(){
+        canvasView.tool = PKEraserTool(.bitmap)
+//        canvasView.tool = PKEraserTool(.bitmap, width: 2)
     }
     func reloadDrawingData(drawingData: String?) {
        if (drawingData == nil) {

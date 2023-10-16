@@ -203,6 +203,14 @@ class PencilKitController {
   Future<void> hide() => _channel.invokeMethod('hide');
 
   Future<void> setPKToolPen() => _channel.invokeMethod('setPKToolPen');
+  Future<void> setPKToolPencil() => _channel.invokeMethod('setPKToolPencil');
+  Future<void> setPKToolMarker() => _channel.invokeMethod('setPKToolMarker');
+
+  /// An eraser that removes an entire drawn line.
+  Future<void> setPKToolEraserVector() => _channel.invokeMethod('setPKToolEraserVector');
+
+  /// An eraser that removes only those portions of the drawing it touches.
+  Future<void> setPKToolEraserBitmap() => _channel.invokeMethod('setPKToolEraserBitmap');
 
   Future<void> save() => _channel.invokeMethod('save');
 

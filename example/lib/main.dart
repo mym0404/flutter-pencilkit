@@ -91,6 +91,42 @@ class _MyAppState extends State<MyApp> {
                             controller.setPKToolPen();
                           },
                         ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.edit_outlined,
+                            color: Colors.grey,
+                          ),
+                          onPressed: () {
+                            controller.setPKToolPencil();
+                          },
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.auto_fix_high,
+                            color: Colors.yellow,
+                          ),
+                          onPressed: () {
+                            controller.setPKToolMarker();
+                          },
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.earbuds_rounded,
+                            color: Colors.pinkAccent,
+                          ),
+                          onPressed: () {
+                            controller.setPKToolEraserVector();
+                          },
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.lens_outlined,
+                            color: Colors.pinkAccent,
+                          ),
+                          onPressed: () {
+                            controller.setPKToolEraserBitmap();
+                          },
+                        ),
                       ],
                     ),
                     // add buttons for new feature - save, reload, export
