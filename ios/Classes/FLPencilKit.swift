@@ -60,6 +60,8 @@ class FLPencilKit: NSObject, FlutterPlatformView {
 					pencilKitView.show()
 				case "hide":
 					pencilKitView.hide()
+                case "setPKToolPen":
+                    pencilKitView.setPKToolPen()
 				case "save":
                 pencilKitView.onTapSaveCallback()
                 case "reload":
@@ -149,6 +151,9 @@ fileprivate class PencilKitView: UIView {
 	func hide(){
 		canvasView.resignFirstResponder()
 	}
+    func setPKToolPen(){
+        canvasView.tool = PKInkingTool(.pen, color: .red, width: 2)
+    }
     func reloadDrawingData(drawingData: String?) {
        if (drawingData == nil) {
            canvasView.drawing = PKDrawing()
