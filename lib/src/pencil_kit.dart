@@ -202,6 +202,8 @@ class PencilKitController {
 
   Future<void> hide() => _channel.invokeMethod('hide');
 
+  Future<void> setPKToolPen() => _channel.invokeMethod('setPKToolPen');
+
   Future<void> save() => _channel.invokeMethod('save');
 
   Future<void> reload(String? drawingData) => _channel.invokeMethod('reload', drawingData);

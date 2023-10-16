@@ -82,6 +82,15 @@ class _MyAppState extends State<MyApp> {
                             controller.clear();
                           },
                         ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.edit,
+                            color: Colors.red,
+                          ),
+                          onPressed: () {
+                            controller.setPKToolPen();
+                          },
+                        ),
                       ],
                     ),
                     // add buttons for new feature - save, reload, export
