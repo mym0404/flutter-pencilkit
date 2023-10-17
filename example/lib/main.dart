@@ -16,6 +16,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late final PencilKitController controller;
   String? drawingData = null;
+  String currentToolType = ToolType.pen.name;
+  double currentWidth = 1;
+  Color currentColor = Colors.black;
 
   @override
   Widget build(BuildContext context) {
@@ -82,10 +85,17 @@ class _MyAppState extends State<MyApp> {
                         IconButton(
                           icon: const Icon(
                             Icons.edit,
-                            color: Colors.red,
+                            color: Colors.black,
                           ),
                           onPressed: () {
-                            controller.setPKToolPen();
+                            setState(() {
+                              currentToolType = ToolType.pen.name;
+                              controller.setPKTool(
+                                toolType: currentToolType,
+                                width: currentWidth,
+                                color: currentColor,
+                              );
+                            });
                           },
                         ),
                         IconButton(
@@ -94,16 +104,30 @@ class _MyAppState extends State<MyApp> {
                             color: Colors.grey,
                           ),
                           onPressed: () {
-                            controller.setPKToolPencil();
+                            setState(() {
+                              currentToolType = ToolType.pencil.name;
+                              controller.setPKTool(
+                                toolType: currentToolType,
+                                width: currentWidth,
+                                color: currentColor,
+                              );
+                            });
                           },
                         ),
                         IconButton(
                           icon: const Icon(
                             Icons.auto_fix_high,
-                            color: Colors.yellow,
+                            color: Colors.grey,
                           ),
                           onPressed: () {
-                            controller.setPKToolMarker();
+                            setState(() {
+                              currentToolType = ToolType.marker.name;
+                              controller.setPKTool(
+                                toolType: currentToolType,
+                                width: currentWidth,
+                                color: currentColor,
+                              );
+                            });
                           },
                         ),
                         IconButton(
@@ -112,7 +136,14 @@ class _MyAppState extends State<MyApp> {
                             color: Colors.pinkAccent,
                           ),
                           onPressed: () {
-                            controller.setPKToolEraserVector();
+                            setState(() {
+                              currentToolType = ToolType.eraserVector.name;
+                              controller.setPKTool(
+                                toolType: currentToolType,
+                                width: currentWidth,
+                                color: currentColor,
+                              );
+                            });
                           },
                         ),
                         IconButton(
@@ -121,7 +152,14 @@ class _MyAppState extends State<MyApp> {
                             color: Colors.pinkAccent,
                           ),
                           onPressed: () {
-                            controller.setPKToolEraserBitmap();
+                            setState(() {
+                              currentToolType = ToolType.eraserBitmap.name;
+                              controller.setPKTool(
+                                toolType: currentToolType,
+                                width: currentWidth,
+                                color: currentColor,
+                              );
+                            });
                           },
                         ),
                       ],
@@ -133,14 +171,99 @@ class _MyAppState extends State<MyApp> {
                             Icons.lens,
                             color: Colors.orange,
                           ),
-                          onPressed: () => controller.setColor(Colors.orange),
+                          onPressed: () {
+                            setState(() {
+                              currentColor = Colors.orange;
+                              controller.setPKTool(
+                                toolType: currentToolType,
+                                width: currentWidth,
+                                color: currentColor,
+                              );
+                            });
+                          },
                         ),
                         IconButton(
                           icon: const Icon(
-                            Icons.line_style,
-                            color: Colors.black,
+                            Icons.lens,
+                            color: Colors.purpleAccent,
                           ),
-                          onPressed: () => controller.setWidth(12.5),
+                          onPressed: () {
+                            setState(() {
+                              currentColor = Colors.purpleAccent;
+                              controller.setPKTool(
+                                toolType: currentToolType,
+                                width: currentWidth,
+                                color: currentColor,
+                              );
+                            });
+                          },
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.lens,
+                            color: Colors.greenAccent,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              currentColor = Colors.greenAccent;
+                              controller.setPKTool(
+                                toolType: currentToolType,
+                                width: currentWidth,
+                                color: currentColor,
+                              );
+                            });
+                          },
+                        ),
+                        IconButton(
+                          icon: Container(
+                            color: Colors.black,
+                            width: 12,
+                            height: 1,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              currentWidth = 1;
+                              controller.setPKTool(
+                                toolType: currentToolType,
+                                width: currentWidth,
+                                color: currentColor,
+                              );
+                            });
+                          },
+                        ),
+                        IconButton(
+                          icon: Container(
+                            color: Colors.black,
+                            width: 12,
+                            height: 3,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              currentWidth = 3;
+                              controller.setPKTool(
+                                toolType: currentToolType,
+                                width: currentWidth,
+                                color: currentColor,
+                              );
+                            });
+                          },
+                        ),
+                        IconButton(
+                          icon: Container(
+                            color: Colors.black,
+                            width: 12,
+                            height: 5,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              currentWidth = 5;
+                              controller.setPKTool(
+                                toolType: currentToolType,
+                                width: currentWidth,
+                                color: currentColor,
+                              );
+                            });
+                          },
                         ),
                       ],
                     ),
@@ -210,4 +333,12 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
+}
+
+enum ToolType {
+  pen,
+  pencil,
+  marker,
+  eraserVector,
+  eraserBitmap,
 }
