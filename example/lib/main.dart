@@ -39,10 +39,7 @@ class _MyAppState extends State<MyApp> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text(
-                      'PencilKit Example',
-                      style: TextStyle(color: Colors.black, fontSize: 20),
-                    ),
+                    SizedBox(),
                     Row(
                       children: [
                         IconButton(
@@ -126,6 +123,24 @@ class _MyAppState extends State<MyApp> {
                           onPressed: () {
                             controller.setPKToolEraserBitmap();
                           },
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.lens,
+                            color: Colors.orange,
+                          ),
+                          onPressed: () => controller.setColor(Colors.orange),
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.line_style,
+                            color: Colors.black,
+                          ),
+                          onPressed: () => controller.setWidth(12.5),
                         ),
                       ],
                     ),

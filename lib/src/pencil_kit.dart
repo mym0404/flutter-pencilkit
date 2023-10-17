@@ -212,6 +212,9 @@ class PencilKitController {
   /// An eraser that removes only those portions of the drawing it touches.
   Future<void> setPKToolEraserBitmap() => _channel.invokeMethod('setPKToolEraserBitmap');
 
+  Future<void> setWidth(double width) => _channel.invokeMethod('setWidth', width);
+  Future<void> setColor(Color color) => _channel.invokeMethod('setColor', color?.value);
+
   Future<void> save() => _channel.invokeMethod('save');
 
   Future<void> reload(String? drawingData) => _channel.invokeMethod('reload', drawingData);

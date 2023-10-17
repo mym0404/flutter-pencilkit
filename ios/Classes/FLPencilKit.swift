@@ -70,6 +70,10 @@ class FLPencilKit: NSObject, FlutterPlatformView {
                     pencilKitView.setPKToolEraserVector()
                 case "setPKToolEraserBitmap":
                     pencilKitView.setPKToolEraserBitmap()
+                case "setWidth":
+                    pencilKitView.setWidth(width: call.arguments as! Double)
+                case "setColor":
+                    pencilKitView.setColor(color: call.arguments as! Int)
 				case "save":
                 pencilKitView.onTapSaveCallback()
                 case "reload":
@@ -178,6 +182,16 @@ fileprivate class PencilKitView: UIView {
     func setPKToolEraserBitmap(){
         canvasView.tool = PKEraserTool(.bitmap)
 //        canvasView.tool = PKEraserTool(.bitmap, width: 2)
+    }
+    func setWidth(width: Double) {
+        let widthFloat = NSNumber.init(value: width).floatValue
+        let widthCGFloat = CGFloat(widthFloat)
+        var currentPKTool = toolPicker?.selectedTool as? PKInkingTool
+        currentPKTool?.width = widthCGFloat
+    }
+    func setColor(color: Int) {
+        var currentPKTool = toolPicker?.selectedTool as? PKInkingTool
+        currentPKTool?.color = UIColor(hex: color)
     }
     func reloadDrawingData(drawingData: String?) {
        if (drawingData == nil) {
