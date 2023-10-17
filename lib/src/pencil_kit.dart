@@ -27,14 +27,6 @@ enum PencilKitIos14DrawingPolicy {
   final int value;
 }
 
-enum ToolType {
-  pen,
-  pencil,
-  marker,
-  eraserVector,
-  eraserBitmap,
-}
-
 class PencilKit extends StatefulWidget {
   const PencilKit({
     super.key,
@@ -210,37 +202,12 @@ class PencilKitController {
 
   Future<void> hide() => _channel.invokeMethod('hide');
 
-  /// new method
+  /// set toolType, width, color value of PKTool
   Future<void> setPKTool({required String toolType, double? width, Color? color}) => _channel.invokeMethod('setPKTool', {
         'toolType': toolType, // String
         'width': width ?? 1.0, // double
         'color': (color?.value) ?? Colors.black.value, // int
       });
-
-  /// old methods (deprecated)
-  Future<void> setPKToolPen() => _channel.invokeMethod('setPKToolPen');
-
-  /// old methods (deprecated)
-  Future<void> setPKToolPencil() => _channel.invokeMethod('setPKToolPencil');
-
-  /// old methods (deprecated)
-  Future<void> setPKToolMarker() => _channel.invokeMethod('setPKToolMarker');
-
-  /// old methods (deprecated)
-  /// An eraser that removes an entire drawn line.
-  Future<void> setPKToolEraserVector() => _channel.invokeMethod('setPKToolEraserVector');
-
-  /// old methods (deprecated)
-  /// An eraser that removes only those portions of the drawing it touches.
-  Future<void> setPKToolEraserBitmap() => _channel.invokeMethod('setPKToolEraserBitmap');
-
-  /// old methods (deprecated)
-  /// set PKTool width value
-  Future<void> setWidth(double width) => _channel.invokeMethod('setWidth', width);
-
-  /// old methods (deprecated)
-  /// set PKTool color value
-  Future<void> setColor(Color color) => _channel.invokeMethod('setColor', color.value);
 
   Future<void> save() => _channel.invokeMethod('save');
 

@@ -62,22 +62,8 @@ class FLPencilKit: NSObject, FlutterPlatformView {
 					pencilKitView.hide()
 				case "setPKTool":
                     pencilKitView.setPKTool(properties: call.arguments as! [String : Any]);
-                case "setPKToolPen":
-                    pencilKitView.setPKToolPen()
-                case "setPKToolPencil":
-                    pencilKitView.setPKToolPencil()
-                case "setPKToolMarker":
-                    pencilKitView.setPKToolMarker()
-                case "setPKToolEraserVector":
-                    pencilKitView.setPKToolEraserVector()
-                case "setPKToolEraserBitmap":
-                    pencilKitView.setPKToolEraserBitmap()
-                case "setWidth":
-                    pencilKitView.setWidth(width: call.arguments as! Double)
-                case "setColor":
-                    pencilKitView.setColor(color: call.arguments as! Int)
 				case "save":
-                pencilKitView.onTapSaveCallback()
+                    pencilKitView.onTapSaveCallback()
                 case "reload":
                     pencilKitView.reloadDrawingData(drawingData: call.arguments as! String?)
 				case "applyProperties":
@@ -165,7 +151,6 @@ fileprivate class PencilKitView: UIView {
 	func hide(){
 		canvasView.resignFirstResponder()
 	}
-
     func setPKTool(properties: [String:Any]){
 	    // toolType
         let inputToolType = properties["toolType"] as! String
@@ -192,43 +177,6 @@ fileprivate class PencilKitView: UIView {
                 break
         }
     }
-
-    func setPKToolPen(){
-        canvasView.tool = PKInkingTool(.pen, color: .red, width: 2)
-    }
-    func setPKToolPencil(){
-        canvasView.tool = PKInkingTool(.pencil, color: .gray, width: 3)
-    }
-    func setPKToolMarker(){
-        canvasView.tool = PKInkingTool(.marker, color: .yellow, width: 4)
-    }
-//    @available(iOS 16.4, *)
-    func setPKToolEraserVector(){
-        canvasView.tool = PKEraserTool(.vector)
-//        canvasView.tool = PKEraserTool(.vector, width: 2)
-//        toolPicker?.selectedTool = PKEraserTool(.bitmap, width: 4)
-    }
-//    @available(iOS 16.4, *)
-    func setPKToolEraserBitmap(){
-        canvasView.tool = PKEraserTool(.bitmap)
-//        canvasView.tool = PKEraserTool(.bitmap, width: 2)
-    }
-    func setWidth(width: Double) {
-        let widthFloat = NSNumber.init(value: width).floatValue
-        let widthCGFloat = CGFloat(widthFloat)
-//        var currentPKTool = toolPicker?.selectedTool as? PKInkingTool
-//        currentPKTool?.width = widthCGFloat
-//        print("currentPKTool?.width = ")
-//        print(currentPKTool?.width as Any)
-        canvasView.tool = PKInkingTool(.pencil, width: widthCGFloat)
-    }
-    func setColor(color: Int) {
-//        var currentPKTool = toolPicker?.selectedTool as? PKInkingTool
-//        currentPKTool?.color = UIColor(hex: color)
-//        print("currentPKTool?.color = ")
-//        print(currentPKTool?.color as Any)
-        canvasView.tool = PKInkingTool(.pencil, color: UIColor(hex: color))
-    }
     func reloadDrawingData(drawingData: String?) {
        if (drawingData == nil) {
            canvasView.drawing = PKDrawing()
@@ -241,8 +189,7 @@ fileprivate class PencilKitView: UIView {
                print("errrrorr")
            }
        }
-
-   }
+    }
 	func applyProperties(properties: [String:Any?]) {
 		if let alwaysBounceVertical = properties["alwaysBounceVertical"] as? Bool {
 			canvasView.alwaysBounceVertical = alwaysBounceVertical
