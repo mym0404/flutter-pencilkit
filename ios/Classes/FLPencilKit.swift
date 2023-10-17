@@ -186,12 +186,18 @@ fileprivate class PencilKitView: UIView {
     func setWidth(width: Double) {
         let widthFloat = NSNumber.init(value: width).floatValue
         let widthCGFloat = CGFloat(widthFloat)
-        var currentPKTool = toolPicker?.selectedTool as? PKInkingTool
-        currentPKTool?.width = widthCGFloat
+//        var currentPKTool = toolPicker?.selectedTool as? PKInkingTool
+//        currentPKTool?.width = widthCGFloat
+//        print("currentPKTool?.width = ")
+//        print(currentPKTool?.width as Any)
+        canvasView.tool = PKInkingTool(.pencil, width: widthCGFloat)
     }
     func setColor(color: Int) {
-        var currentPKTool = toolPicker?.selectedTool as? PKInkingTool
-        currentPKTool?.color = UIColor(hex: color)
+//        var currentPKTool = toolPicker?.selectedTool as? PKInkingTool
+//        currentPKTool?.color = UIColor(hex: color)
+//        print("currentPKTool?.color = ")
+//        print(currentPKTool?.color as Any)
+        canvasView.tool = PKInkingTool(.pencil, color: UIColor(hex: color))
     }
     func reloadDrawingData(drawingData: String?) {
        if (drawingData == nil) {
