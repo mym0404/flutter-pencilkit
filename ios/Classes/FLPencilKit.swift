@@ -81,6 +81,8 @@ class FLPencilKit: NSObject, FlutterPlatformView {
         load(pencilKitView: pencilKitView, call: call, result: result)
       case "getBase64Data":
         getBase64Data(pencilKitView: pencilKitView, call: call, result: result)
+      case "loadBase64Data":
+        loadBase64Data(pencilKitView: pencilKitView, call: call, result: result)
       case "applyProperties":
         pencilKitView.applyProperties(properties: call.arguments as! [String: Any?])
         result(nil)
@@ -120,6 +122,21 @@ class FLPencilKit: NSObject, FlutterPlatformView {
   ) {
     let base64Data = pencilKitView.getBase64Data()
     result(base64Data)
+  }
+
+  @available(iOS 13, *)
+  private func loadBase64Data(
+    pencilKitView: PencilKitView,
+    call: FlutterMethodCall,
+    result: FlutterResult
+  ) {
+    do {
+      let (base64Data) = parseArguments(call.arguments)
+      try pencilKitView.load(base64Data: base64Data)
+      result(nil)
+    } catch {
+      result(FlutterError(code: "NATIVE_ERROR", message: error.localizedDescription, details: nil))
+    }
   }
 
   private func parseArguments(_ arguments: Any?) -> (URL, Bool) {
@@ -241,6 +258,18 @@ private class PencilKitView: UIView {
       return drawing.dataRepresentation().base64EncodedString()
     }
     return nil
+  }
+
+  func load(base64Data: String) throws {
+    let data = Data(base64Encoded: base64Data)!
+    let drawing = try PKDrawing(data: data)
+
+    let newCanvasView = createCanvasView(delegate: self)
+    newCanvasView.drawing = drawing
+    canvasView.removeFromSuperview()
+    synchronizeCanvasViewProperties(old: canvasView, new: newCanvasView)
+    canvasView = newCanvasView
+    layoutCanvasView()
   }
 
   func getBase64Data() -> String {
