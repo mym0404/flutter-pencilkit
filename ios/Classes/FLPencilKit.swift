@@ -131,7 +131,7 @@ class FLPencilKit: NSObject, FlutterPlatformView {
     result: FlutterResult
   ) {
     do {
-      let (base64Data) = parseArguments(call.arguments)
+      let base64Data = call.arguments;
       try pencilKitView.loadBase64Data(base64Data: base64Data)
       result(nil)
     } catch {

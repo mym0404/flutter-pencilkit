@@ -260,5 +260,5 @@ class PencilKitController {
   /// }
   /// ```
   Future<void> loadBase64Data(String base64Data) =>
-      _channel.invokeMethod('loadBase64Data', <Object>[base64Data]);
+      _channel.invokeMethod('loadBase64Data', base64Data);
 }
