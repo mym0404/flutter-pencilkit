@@ -132,7 +132,7 @@ class FLPencilKit: NSObject, FlutterPlatformView {
   ) {
     do {
       let (base64Data) = parseArguments(call.arguments)
-      try pencilKitView.load(base64Data: base64Data)
+      try pencilKitView.loadBase64Data(base64Data: base64Data)
       result(nil)
     } catch {
       result(FlutterError(code: "NATIVE_ERROR", message: error.localizedDescription, details: nil))
@@ -260,7 +260,11 @@ private class PencilKitView: UIView {
     return nil
   }
 
-  func load(base64Data: String) throws {
+  func getBase64Data() -> String {
+    canvasView.drawing.dataRepresentation().base64EncodedString()
+  }
+
+  func loadBase64Data(base64Data: String) throws {
     let data = Data(base64Encoded: base64Data)!
     let drawing = try PKDrawing(data: data)
 
@@ -270,10 +274,6 @@ private class PencilKitView: UIView {
     synchronizeCanvasViewProperties(old: canvasView, new: newCanvasView)
     canvasView = newCanvasView
     layoutCanvasView()
-  }
-
-  func getBase64Data() -> String {
-    canvasView.drawing.dataRepresentation().base64EncodedString()
   }
 
   func applyProperties(properties: [String: Any?]) {
