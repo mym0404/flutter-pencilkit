@@ -245,4 +245,20 @@ class PencilKitController {
   Future<String> getBase64Data() async {
     return await _channel.invokeMethod('getBase64Data') as String;
   }
+
+  /// Load drawing data from base 64 encoded form.
+  /// ```
+  /// Throws an [Error] if failed
+  /// ```
+  /// Example
+  /// ```dart
+  /// try {
+  ///  await controller.loadBase64Data(base64Data);
+  /// // handle success
+  /// } catch (e) {
+  /// // handle error
+  /// }
+  /// ```
+  Future<void> loadBase64Data(String base64Data) =>
+      _channel.invokeMethod('loadBase64Data', base64Data);
 }
