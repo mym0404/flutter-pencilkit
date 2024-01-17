@@ -46,16 +46,17 @@ flutter pub add pencil_kit
 
 Methods available for `PencilKitController`.
 
-| Method                          | Description                                                                             | Throws |
-|---------------------------------|-----------------------------------------------------------------------------------------|--------|
-| clear()                         | Clear canvas                                                                            | X      |
-| show()                          | Show Palette                                                                            | X      |
-| hide()                          | Hide Palette                                                                            | X      |
-| redo()                          | Redo last drawing action                                                                | X      |
-| undo()                          | Undo last drawing action                                                                | X      |
-| save(): Future<String?>         | Save drawing data into file system, can return base 64 data if `withBase64Data` is true | O      |
-| load(): Future<String?>         | Load drawing data from file system, can return base 64 data if `withBase64Data` is true | O      |
-| getBase64Data(): Future<String> | Get current drawing data as base64 string form                                          | O      |
+| Method                                          | Description                                                                             | Throws |
+|-------------------------------------------------|-----------------------------------------------------------------------------------------|--------|
+| clear()                                         | Clear canvas                                                                            | X      |
+| show()                                          | Show Palette                                                                            | X      |
+| hide()                                          | Hide Palette                                                                            | X      |
+| redo()                                          | Redo last drawing action                                                                | X      |
+| undo()                                          | Undo last drawing action                                                                | X      |
+| save(): Future<String?>                         | Save drawing data into file system, can return base 64 data if `withBase64Data` is true | O      |
+| load(): Future<String?>                         | Load drawing data from file system, can return base 64 data if `withBase64Data` is true | O      |
+| getBase64Data(): Future<String>                 | Get current drawing data as base64 string form                                          | O      |
+| loadBase64Data(String base64Data): Future<void> | Load base64 drawing data into canvas                                                    | O      |
 
 ## `PencilKit` Widget Parameters
 

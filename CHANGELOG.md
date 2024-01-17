@@ -1,3 +1,9 @@
+## 1.0.7
+
+* Added loadBase64Data feature [PR](https://github.com/mj-studio-library/flutter-pencilkit/pull/12) by [jack-szeto](https://github.com/jack-szeto)
+
+Thank you for contributing
+
 ## 1.0.6
 
 * Add parameter `withBase64Data` in `save()` and `load()`
