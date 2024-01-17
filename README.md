@@ -88,7 +88,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href="https://www.mjstudio.net/"><img src="https://avatars.githubusercontent.com/u/33388801?v=4?s=100" width="100px;" alt="MJ Studio"/><br /><sub><b>MJ Studio</b></sub></a><br /><a href="#ideas-mym0404" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.mjstudio.net/"><img src="https://avatars.githubusercontent.com/u/33388801?v=4?s=100" width="100px;" alt="MJ Studio"/><br /><sub><b>MJ Studio</b></sub></a><br /><a href="#ideas-mym0404" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/frybitsinc"><img src="https://avatars.githubusercontent.com/u/16763975?v=4?s=100" width="100px;" alt="frybitsinc"/><br /><sub><b>frybitsinc</b></sub></a><br /><a href="https://github.com/mj-studio-library/flutter-pencilkit/commits?author=frybitsinc" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
