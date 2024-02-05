@@ -3,5 +3,6 @@ export 'src/pencil_kit.dart'
         PencilKit,
         PencilKitController,
         PencilKitViewCreatedCallback,
-        PencilKitIos14DrawingPolicy;
+        PencilKitIos14DrawingPolicy,
+        ToolType;
 export 'src/pencil_kit_util.dart';

@@ -12,11 +12,41 @@ typedef PencilKitViewCreatedCallback = void Function(
     PencilKitController controller);
 
 enum ToolType {
-  pen,
-  pencil,
-  marker,
-  eraserVector,
-  eraserBitmap,
+  /// pen tool
+  pen(false, false),
+
+  /// pencil tool
+  pencil(false, false),
+
+  /// marker tool
+  marker(false, false),
+
+  /// monoline tool, available from iOS 17.0
+  monoline(false, true),
+
+  /// fountainPen tool, available from iOS 17.0
+  fountainPen(false, true),
+
+  /// watercolor tool, available from iOS 17.0
+  watercolor(false, true),
+
+  /// crayon tool, available from iOS 17.0
+  crayon(false, true),
+
+  /// vector eraser tool
+  eraserVector(false, false),
+
+  /// bitmap eraser tool
+  eraserBitmap(false, false),
+
+  /// fixed width bitmap eraser tool, available from iOS 16.4
+  eraserFixedWidthBitmap(true, false),
+  ;
+
+  const ToolType(this.isAvailableFromIos16_4, this.isAvailableFromIos17);
+
+  final bool isAvailableFromIos16_4;
+  final bool isAvailableFromIos17;
 }
 
 enum PencilKitIos14DrawingPolicy {
@@ -206,15 +236,6 @@ class PencilKitController {
   /// Hide palette
   Future<void> hide() => _channel.invokeMethod('hide');
 
-  /// Set PKTool toolType, width, and color
-  Future<void> setPKTool(
-          {required String toolType, double? width, Color? color}) =>
-      _channel.invokeMethod('setPKTool', <String, Object>{
-        'toolType': toolType, // String
-        'width': width ?? 1.0, // double
-        'color': color?.value ?? Colors.black.value, // int
-      });
-
   /// Save drawing data into file system. The absolute uri of file in filesystem should be retrieved other library like 'path_provider'.
   ///
   /// Throws an [Error] if failed
@@ -278,4 +299,22 @@ class PencilKitController {
   /// ```
   Future<void> loadBase64Data(String base64Data) =>
       _channel.invokeMethod('loadBase64Data', base64Data);
+
+  /// Set PKTool toolType, width, and color
+  ///
+  /// This method can fail if tool type is not supported by device iOS version
+  /// In eraser tools, the width parameter works only from iOS 16.4 or above iOS version
+  ///
+  /// You should check whether feature is available in user's iOS version with [ToolType.isAvailableFromIos16_4] and [ToolType.isAvailableFromIos17]
+  ///
+  /// See also:
+  ///
+  /// * [ToolType] available tool types
+  Future<void> setPKTool(
+          {required ToolType toolType, double? width, Color? color}) =>
+      _channel.invokeMethod('setPKTool', <String, Object?>{
+        'toolType': toolType.name,
+        'width': width,
+        'color': color?.value,
+      });
 }
