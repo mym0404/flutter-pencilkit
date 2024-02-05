@@ -19,7 +19,6 @@ enum ToolType {
   eraserBitmap,
 }
 
-
 enum PencilKitIos14DrawingPolicy {
   /// if a `PKToolPicker` is visible, respect `UIPencilInteraction.prefersPencilOnlyDrawing`,
   /// otherwise only pencil touches draw.
@@ -208,11 +207,13 @@ class PencilKitController {
   Future<void> hide() => _channel.invokeMethod('hide');
 
   /// Set PKTool toolType, width, and color
-  Future<void> setPKTool({required String toolType, double? width, Color? color}) => _channel.invokeMethod('setPKTool', <String, Object>{
-    'toolType': toolType, // String
-    'width': width ?? 1.0, // double
-    'color': color?.value ?? Colors.black.value, // int
-  });
+  Future<void> setPKTool(
+          {required String toolType, double? width, Color? color}) =>
+      _channel.invokeMethod('setPKTool', <String, Object>{
+        'toolType': toolType, // String
+        'width': width ?? 1.0, // double
+        'color': color?.value ?? Colors.black.value, // int
+      });
 
   /// Save drawing data into file system. The absolute uri of file in filesystem should be retrieved other library like 'path_provider'.
   ///
