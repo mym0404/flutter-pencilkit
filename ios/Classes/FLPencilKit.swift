@@ -75,6 +75,9 @@ class FLPencilKit: NSObject, FlutterPlatformView {
       case "hide":
         pencilKitView.hide()
         result(nil)
+      case "setPKTool":
+        pencilKitView.setPKTool(properties: call.arguments as! [String : Any]);
+        result(nil)
       case "save":
         save(pencilKitView: pencilKitView, call: call, result: result)
       case "load":
@@ -232,6 +235,33 @@ private class PencilKitView: UIView {
 
   func hide() {
     canvasView.resignFirstResponder()
+  }
+
+  func setPKTool(properties: [String:Any]){
+    // toolType
+    let inputToolType = properties["toolType"] as! String
+    // width value from double to CGFloat
+    let inputWidthDouble = properties["width"] as! Double
+    let widthFloat = NSNumber.init(value: inputWidthDouble).floatValue
+    let widthCGFloat = CGFloat(widthFloat)
+    // color value from int to UIColor
+    let inputColorInt = properties["color"] as! Int
+    let inputUIColor = UIColor(hex: inputColorInt)
+    // set PKTool based on input PKToolType
+    switch(inputToolType){
+        case "pen":
+            canvasView.tool = PKInkingTool(.pen, color: inputUIColor, width: widthCGFloat)
+        case "pencil":
+            canvasView.tool = PKInkingTool(.pencil, color: inputUIColor, width: widthCGFloat)
+        case "marker":
+            canvasView.tool = PKInkingTool(.marker, color: inputUIColor, width: widthCGFloat)
+        case "eraserVector":
+            canvasView.tool = PKEraserTool(.vector)
+        case "eraserBitmap":
+            canvasView.tool = PKEraserTool(.bitmap)
+        default:
+            break
+    }
   }
 
   func save(url: URL, withBase64Data: Bool) throws -> String? {

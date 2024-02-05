@@ -10,6 +10,14 @@ void main() {
   runApp(const MyApp());
 }
 
+enum ToolType {
+  pen,
+  pencil,
+  marker,
+  eraserVector,
+  eraserBitmap,
+}
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -19,6 +27,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late final PencilKitController controller;
+  String currentToolType = ToolType.pen.name;
+  double currentWidth = 1;
+  Color currentColor = Colors.black;
 
   @override
   Widget build(BuildContext context) {
@@ -134,6 +145,187 @@ class _MyAppState extends State<MyApp> {
                         fontSize: 12.0);
                   },
                   tooltip: "Get base64 data",
+                ),
+                const Spacer(),
+                IconButton(
+                  icon: const Icon(
+                    Icons.lens,
+                    color: Colors.orange,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      currentColor = Colors.orange;
+                      controller.setPKTool(
+                        toolType: currentToolType,
+                        width: currentWidth,
+                        color: currentColor,
+                      );
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(
+                    Icons.lens,
+                    color: Colors.purpleAccent,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      currentColor = Colors.purpleAccent;
+                      controller.setPKTool(
+                        toolType: currentToolType,
+                        width: currentWidth,
+                        color: currentColor,
+                      );
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(
+                    Icons.lens,
+                    color: Colors.greenAccent,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      currentColor = Colors.greenAccent;
+                      controller.setPKTool(
+                        toolType: currentToolType,
+                        width: currentWidth,
+                        color: currentColor,
+                      );
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: Container(
+                    color: Colors.black,
+                    width: 12,
+                    height: 1,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      currentWidth = 1;
+                      controller.setPKTool(
+                        toolType: currentToolType,
+                        width: currentWidth,
+                        color: currentColor,
+                      );
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: Container(
+                    color: Colors.black,
+                    width: 12,
+                    height: 3,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      currentWidth = 3;
+                      controller.setPKTool(
+                        toolType: currentToolType,
+                        width: currentWidth,
+                        color: currentColor,
+                      );
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: Container(
+                    color: Colors.black,
+                    width: 12,
+                    height: 5,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      currentWidth = 5;
+                      controller.setPKTool(
+                        toolType: currentToolType,
+                        width: currentWidth,
+                        color: currentColor,
+                      );
+                    });
+                  },
+                ),
+                const Spacer(),
+                IconButton(
+                  icon: const Icon(
+                    Icons.edit,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      currentToolType = ToolType.pen.name;
+                      controller.setPKTool(
+                        toolType: currentToolType,
+                        width: currentWidth,
+                        color: currentColor,
+                      );
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(
+                    Icons.edit_outlined,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      currentToolType = ToolType.pencil.name;
+                      controller.setPKTool(
+                        toolType: currentToolType,
+                        width: currentWidth,
+                        color: currentColor,
+                      );
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(
+                    Icons.auto_fix_high,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      currentToolType = ToolType.marker.name;
+                      controller.setPKTool(
+                        toolType: currentToolType,
+                        width: currentWidth,
+                        color: currentColor,
+                      );
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(
+                    Icons.earbuds_rounded,
+                    color: Colors.pinkAccent,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      currentToolType = ToolType.eraserVector.name;
+                      controller.setPKTool(
+                        toolType: currentToolType,
+                        width: currentWidth,
+                        color: currentColor,
+                      );
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(
+                    Icons.lens_outlined,
+                    color: Colors.pinkAccent,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      currentToolType = ToolType.eraserBitmap.name;
+                      controller.setPKTool(
+                        toolType: currentToolType,
+                        width: currentWidth,
+                        color: currentColor,
+                      );
+                    });
+                  },
                 ),
               ],
             )),
