@@ -8,9 +8,9 @@ import '../pencil_kit.dart';
 
 /// Optional callback invoked when a web view is first created. [controller] is
 /// the [PencilKitController] for the created pencil kit view.
-typedef PencilKitViewCreatedCallback = void Function(
-    PencilKitController controller);
+typedef PencilKitViewCreatedCallback = void Function(PencilKitController controller);
 
+/// PKTool type enum for [PencilKitController.setPKTool]
 enum ToolType {
   /// pen tool
   pen(false, false),
@@ -176,8 +176,7 @@ class _PencilKitState extends State<PencilKit> {
         viewType: 'plugins.mjstudio/flutter_pencil_kit',
         creationParamsCodec: const StandardMessageCodec(),
         onPlatformViewCreated: _onPencilKitPlatformViewCreated,
-        hitTestBehavior:
-            widget.hitTestBehavior ?? PlatformViewHitTestBehavior.opaque,
+        hitTestBehavior: widget.hitTestBehavior ?? PlatformViewHitTestBehavior.opaque,
       );
     } else {
       return _buildUnAvailable();
@@ -187,8 +186,7 @@ class _PencilKitState extends State<PencilKit> {
 
 class PencilKitController {
   PencilKitController._({required int viewId, required this.widget})
-      : _channel =
-            MethodChannel('plugins.mjstudio/flutter_pencil_kit_$viewId') {
+      : _channel = MethodChannel('plugins.mjstudio/flutter_pencil_kit_$viewId') {
     _channel.setMethodCallHandler(
       (MethodCall call) async {
         if (call.method == 'toolPickerVisibilityDidChange') {
@@ -297,8 +295,7 @@ class PencilKitController {
   /// // handle error
   /// }
   /// ```
-  Future<void> loadBase64Data(String base64Data) =>
-      _channel.invokeMethod('loadBase64Data', base64Data);
+  Future<void> loadBase64Data(String base64Data) => _channel.invokeMethod('loadBase64Data', base64Data);
 
   /// Set PKTool toolType, width, and color
   ///
@@ -310,8 +307,7 @@ class PencilKitController {
   /// See also:
   ///
   /// * [ToolType] available tool types
-  Future<void> setPKTool(
-          {required ToolType toolType, double? width, Color? color}) =>
+  Future<void> setPKTool({required ToolType toolType, double? width, Color? color}) =>
       _channel.invokeMethod('setPKTool', <String, Object?>{
         'toolType': toolType.name,
         'width': width,
