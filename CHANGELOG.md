@@ -1,3 +1,9 @@
+## 1.0.8
+
+* Add `setPKTool` method by [PR](https://github.com/mj-studio-library/flutter-pencilkit/pull/18) by [frybitsinc](https://github.com/frybitsinc)
+
+Thank you for contributing
+
 ## 1.0.7
 
 * Added loadBase64Data feature [PR](https://github.com/mj-studio-library/flutter-pencilkit/pull/12) by [jack-szeto](https://github.com/jack-szeto)
