@@ -30,7 +30,7 @@
 - [x] Clear
 - [x] UI properties(background color, scrollability, isOpaque, etc...)
 - [x] Import/Export drawing data
-- [ ] Manage drawing tools programmatically
+- [x] Manage drawing tools programmatically
 
 ### Requirements ✅
 
@@ -46,17 +46,73 @@ flutter pub add pencil_kit
 
 Methods available for `PencilKitController`.
 
-| Method                                          | Description                                                                             | Throws |
-|-------------------------------------------------|-----------------------------------------------------------------------------------------|--------|
-| clear()                                         | Clear canvas                                                                            | X      |
-| show()                                          | Show Palette                                                                            | X      |
-| hide()                                          | Hide Palette                                                                            | X      |
-| redo()                                          | Redo last drawing action                                                                | X      |
-| undo()                                          | Undo last drawing action                                                                | X      |
-| save(): Future<String?>                         | Save drawing data into file system, can return base 64 data if `withBase64Data` is true | O      |
-| load(): Future<String?>                         | Load drawing data from file system, can return base 64 data if `withBase64Data` is true | O      |
-| getBase64Data(): Future<String>                 | Get current drawing data as base64 string form                                          | O      |
-| loadBase64Data(String base64Data): Future<void> | Load base64 drawing data into canvas                                                    | O      |
+| Method                                                                             | Description                                                                             | Throws |
+|------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|--------|
+| clear()                                                                            | Clear canvas                                                                            | X      |
+| show()                                                                             | Show Palette                                                                            | X      |
+| hide()                                                                             | Hide Palette                                                                            | X      |
+| redo()                                                                             | Redo last drawing action                                                                | X      |
+| undo()                                                                             | Undo last drawing action                                                                | X      |
+| save(): Future<String?>                                                            | Save drawing data into file system, can return base 64 data if `withBase64Data` is true | O      |
+| load(): Future<String?>                                                            | Load drawing data from file system, can return base 64 data if `withBase64Data` is true | O      |
+| getBase64Data(): Future<String>                                                    | Get current drawing data as base64 string form                                          | O      |
+| loadBase64Data(String base64Data): Future<void>                                    | Load base64 drawing data into canvas                                                    | O      |
+| setPKTool({required ToolType toolType, double? width, Color? color}): Future<void> | Set `PKTool` type with width and color                                                  | X      |
+
+## Caution for `setPKTool`
+
+`setPKTool` can fail if tool type is not supported by device iOS version
+In eraser tools, the width parameter will work only from iOS 16.4 or above iOS version
+
+You should check whether feature is available in user's iOS version with [ToolType.isAvailableFromIos16_4] and [ToolType.isAvailableFromIos17]
+
+Read more about `ToolType` type definition.
+
+<details>
+<summary>Type definition</summary>
+
+```dart
+/// PKTool type enum for [PencilKitController.setPKTool]
+enum ToolType {
+  /// pen tool
+  pen(false, false),
+
+  /// pencil tool
+  pencil(false, false),
+
+  /// marker tool
+  marker(false, false),
+
+  /// monoline tool, available from iOS 17.0
+  monoline(false, true),
+
+  /// fountainPen tool, available from iOS 17.0
+  fountainPen(false, true),
+
+  /// watercolor tool, available from iOS 17.0
+  watercolor(false, true),
+
+  /// crayon tool, available from iOS 17.0
+  crayon(false, true),
+
+  /// vector eraser tool
+  eraserVector(false, false),
+
+  /// bitmap eraser tool
+  eraserBitmap(false, false),
+
+  /// fixed width bitmap eraser tool, available from iOS 16.4
+  eraserFixedWidthBitmap(true, false),
+  ;
+
+  const ToolType(this.isAvailableFromIos16_4, this.isAvailableFromIos17);
+
+  final bool isAvailableFromIos16_4;
+  final bool isAvailableFromIos17;
+}
+```
+
+</details>
 
 ## `PencilKit` Widget Parameters
 

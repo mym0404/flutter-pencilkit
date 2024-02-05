@@ -75,6 +75,9 @@ class FLPencilKit: NSObject, FlutterPlatformView {
       case "hide":
         pencilKitView.hide()
         result(nil)
+      case "setPKTool":
+        pencilKitView.setPKTool(properties: call.arguments as! [String: Any])
+        result(nil)
       case "save":
         save(pencilKitView: pencilKitView, call: call, result: result)
       case "load":
@@ -131,7 +134,7 @@ class FLPencilKit: NSObject, FlutterPlatformView {
     result: FlutterResult
   ) {
     do {
-      let base64Data = call.arguments as! String;
+      let base64Data = call.arguments as! String
       try pencilKitView.loadBase64Data(base64Data: base64Data)
       result(nil)
     } catch {
@@ -232,6 +235,68 @@ private class PencilKitView: UIView {
 
   func hide() {
     canvasView.resignFirstResponder()
+  }
+
+  func setPKTool(properties: [String: Any]) {
+    // toolType
+    let inputToolType = properties["toolType"] as! String
+    // width
+    var width: CGFloat?
+    if let _width = properties["width"] as? Double {
+      width = CGFloat(truncating: NSNumber(value: _width))
+    }
+    // color
+    var color = UIColor.black
+    if let _color = properties["color"] as? Int {
+      color = UIColor(hex: _color)
+    }
+    // set PKTool based on input PKToolType
+    switch inputToolType {
+    case "pen":
+      canvasView.tool = PKInkingTool(.pen, color: color, width: width)
+    case "pencil":
+      canvasView.tool = PKInkingTool(.pencil, color: color, width: width)
+    case "marker":
+      canvasView.tool = PKInkingTool(.marker, color: color, width: width)
+    case "monoline":
+      if #available(iOS 17.0, *) {
+        canvasView.tool = PKInkingTool(.monoline, color: color, width: width)
+      }
+    case "fountainPen":
+      if #available(iOS 17.0, *) {
+        canvasView.tool = PKInkingTool(.fountainPen, color: color, width: width)
+      }
+    case "watercolor":
+      if #available(iOS 17.0, *) {
+        canvasView.tool = PKInkingTool(.watercolor, color: color, width: width)
+      }
+    case "crayon":
+      if #available(iOS 17.0, *) {
+        canvasView.tool = PKInkingTool(.crayon, color: color, width: width)
+      }
+    case "eraserVector":
+      if #available(iOS 16.4, *) {
+        canvasView
+          .tool = width != nil ? PKEraserTool(.vector, width: width!) : PKEraserTool(.vector)
+      } else {
+        canvasView.tool = PKEraserTool(.vector)
+      }
+    case "eraserBitmap":
+      if #available(iOS 16.4, *) {
+        canvasView
+          .tool = width != nil ? PKEraserTool(.bitmap, width: width!) : PKEraserTool(.bitmap)
+      } else {
+        canvasView.tool = PKEraserTool(.bitmap)
+      }
+    case "eraserFixedWidthBitmap":
+      if #available(iOS 16.4, *) {
+        canvasView
+          .tool = width != nil ? PKEraserTool(.fixedWidthBitmap, width: width!) :
+          PKEraserTool(.bitmap)
+      }
+    default:
+      break
+    }
   }
 
   func save(url: URL, withBase64Data: Bool) throws -> String? {

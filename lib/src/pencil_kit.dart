@@ -8,8 +8,46 @@ import '../pencil_kit.dart';
 
 /// Optional callback invoked when a web view is first created. [controller] is
 /// the [PencilKitController] for the created pencil kit view.
-typedef PencilKitViewCreatedCallback = void Function(
-    PencilKitController controller);
+typedef PencilKitViewCreatedCallback = void Function(PencilKitController controller);
+
+/// PKTool type enum for [PencilKitController.setPKTool]
+enum ToolType {
+  /// pen tool
+  pen(false, false),
+
+  /// pencil tool
+  pencil(false, false),
+
+  /// marker tool
+  marker(false, false),
+
+  /// monoline tool, available from iOS 17.0
+  monoline(false, true),
+
+  /// fountainPen tool, available from iOS 17.0
+  fountainPen(false, true),
+
+  /// watercolor tool, available from iOS 17.0
+  watercolor(false, true),
+
+  /// crayon tool, available from iOS 17.0
+  crayon(false, true),
+
+  /// vector eraser tool
+  eraserVector(false, false),
+
+  /// bitmap eraser tool
+  eraserBitmap(false, false),
+
+  /// fixed width bitmap eraser tool, available from iOS 16.4
+  eraserFixedWidthBitmap(true, false),
+  ;
+
+  const ToolType(this.isAvailableFromIos16_4, this.isAvailableFromIos17);
+
+  final bool isAvailableFromIos16_4;
+  final bool isAvailableFromIos17;
+}
 
 enum PencilKitIos14DrawingPolicy {
   /// if a `PKToolPicker` is visible, respect `UIPencilInteraction.prefersPencilOnlyDrawing`,
@@ -138,8 +176,7 @@ class _PencilKitState extends State<PencilKit> {
         viewType: 'plugins.mjstudio/flutter_pencil_kit',
         creationParamsCodec: const StandardMessageCodec(),
         onPlatformViewCreated: _onPencilKitPlatformViewCreated,
-        hitTestBehavior:
-            widget.hitTestBehavior ?? PlatformViewHitTestBehavior.opaque,
+        hitTestBehavior: widget.hitTestBehavior ?? PlatformViewHitTestBehavior.opaque,
       );
     } else {
       return _buildUnAvailable();
@@ -149,8 +186,7 @@ class _PencilKitState extends State<PencilKit> {
 
 class PencilKitController {
   PencilKitController._({required int viewId, required this.widget})
-      : _channel =
-            MethodChannel('plugins.mjstudio/flutter_pencil_kit_$viewId') {
+      : _channel = MethodChannel('plugins.mjstudio/flutter_pencil_kit_$viewId') {
     _channel.setMethodCallHandler(
       (MethodCall call) async {
         if (call.method == 'toolPickerVisibilityDidChange') {
@@ -259,6 +295,22 @@ class PencilKitController {
   /// // handle error
   /// }
   /// ```
-  Future<void> loadBase64Data(String base64Data) =>
-      _channel.invokeMethod('loadBase64Data', base64Data);
+  Future<void> loadBase64Data(String base64Data) => _channel.invokeMethod('loadBase64Data', base64Data);
+
+  /// Set PKTool toolType, width, and color
+  ///
+  /// This method can fail if tool type is not supported by device iOS version
+  /// In eraser tools, the width parameter works only from iOS 16.4 or above iOS version
+  ///
+  /// You should check whether feature is available in user's iOS version with [ToolType.isAvailableFromIos16_4] and [ToolType.isAvailableFromIos17]
+  ///
+  /// See also:
+  ///
+  /// * [ToolType] available tool types
+  Future<void> setPKTool({required ToolType toolType, double? width, Color? color}) =>
+      _channel.invokeMethod('setPKTool', <String, Object?>{
+        'toolType': toolType.name,
+        'width': width,
+        'color': color?.value,
+      });
 }
