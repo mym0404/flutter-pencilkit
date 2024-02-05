@@ -10,7 +10,7 @@
 
 #### Flutter plugin for using iOS Pencil Kit.
 
-<img src="https://user-images.githubusercontent.com/33388801/197273399-e602b742-87bc-4e59-85fe-76b80915f448.png" width=240/>
+<img src="https://github.com/mj-studio-library/flutter-pencilkit/assets/33388801/5bbd923c-22a2-4976-9c8d-50f4505a66c7" width=240/>
 
 ### Note 📒
 
