@@ -136,6 +136,10 @@ All the available parameters.
 | canvasViewDrawingDidChange        | Called after the drawing on the canvas did change.                                                                             |     |
 | canvasViewDidFinishRendering      | Called after setting `drawing` when the entire drawing is rendered and visible.                                                |     |
 
+## Contribution
+
+Please read [CONTRIBUTING.md](/CONTRIBUTING.md) and contribute your works! Thank you :)
+
 ## Example
 
 Check example on [pub.dev](https://pub.dev/packages/pencil_kit/example) page
