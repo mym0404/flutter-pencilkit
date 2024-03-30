@@ -1,0 +1,15 @@
+{
+  "name": "flutter-pencilkit",
+  "private": true,
+  "author": "MJ Studio",
+  "packageManager": "yarn@4.1.1",
+  "devDependencies": {
+    "@commitlint/cli": "^19.2.1",
+    "@commitlint/config-conventional": "^19.1.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^9.0.11"
+  },
+  "scripts": {
+    "prepare": "husky"
+  }
+}

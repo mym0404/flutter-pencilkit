@@ -1,0 +1,4 @@
+echo '📦 pre-commit hook has benn started...'
+dart format --set-exit-if-changed .
+flutter analyze
+
