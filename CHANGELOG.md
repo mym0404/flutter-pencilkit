@@ -1,3 +1,23 @@
+## 2.0.0
+
+* Add callbacks
+  * toolPickerVisibilityDidChange
+  * toolPickerIsRulerActiveDidChange
+  * toolPickerFramesObscuredDidChange
+  * toolPickerSelectedToolDidChange
+  * canvasViewDidBeginUsingTool
+  * canvasViewDidEndUsingTool
+  * canvasViewDrawingDidChange
+  * canvasViewDidFinishRendering
+
+To avoid confusion, the names of the callbacks were taken directly from the native code.
+
+The detailed method of callback is left in dart doc comment.
+
+### Breaking Change
+- The `onToolPickerVisibilityChanged` is renamed to `toolPickerVisibilityDidChange`
+- The `onRulerActiveChanged` is renamed to `toolPickerIsRulerActiveDidChange`
+
 ## 1.0.8
 
 * Add `setPKTool` method by [PR](https://github.com/mj-studio-library/flutter-pencilkit/pull/18) by [frybitsinc](https://github.com/frybitsinc)
