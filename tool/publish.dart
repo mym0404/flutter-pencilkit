@@ -23,7 +23,7 @@ void main() async {
 
   print('🎉 The version $version is valid to publish!');
 
-  output = await Process.run('bash', ['dart', 'pub', 'publish']);
+  output = await Process.run('bash', ['dart', 'pub', 'publish', '-f']);
   if (output.exitCode == 0) {
     print(output.stdout);
     print('🎉 The version $version is published!');
@@ -32,6 +32,7 @@ void main() async {
     await Process.run('git', ['push', 'origin', 'v$version']);
   } else {
     print(output.stderr);
+    print(output.stdout);
     print('❌ The version $version is failed to publish');
   }
 }
