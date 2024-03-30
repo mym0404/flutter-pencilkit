@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -340,18 +342,24 @@ class _MyAppState extends State<MyApp> {
                 alwaysBounceHorizontal: true,
                 isRulerActive: false,
                 drawingPolicy: PencilKitIos14DrawingPolicy.anyInput,
-                toolPickerVisibilityDidChange: (isVisible) {
-                  if (kDebugMode) {
-                    print('isToolPickerVisible $isVisible');
-                  }
-                },
-                toolPickerIsRulerActiveDidChange: (isRulerActive) {
-                  if (kDebugMode) {
-                    print('isRulerActive $isRulerActive');
-                  }
-                },
-                backgroundColor: Colors.blue.withOpacity(0.1),
+                backgroundColor: Colors.yellow.withOpacity(0.1),
                 isOpaque: false,
+                toolPickerVisibilityDidChange: (isVisible) =>
+                    print('toolPickerVisibilityDidChange $isVisible'),
+                toolPickerIsRulerActiveDidChange: (isRulerActive) =>
+                    print('toolPickerIsRulerActiveDidChange $isRulerActive'),
+                toolPickerFramesObscuredDidChange: () =>
+                    print('toolPickerFramesObscuredDidChange'),
+                toolPickerSelectedToolDidChange: () =>
+                    print('toolPickerSelectedToolDidChange'),
+                canvasViewDidBeginUsingTool: () =>
+                    print('canvasViewDidBeginUsingTool'),
+                canvasViewDidEndUsingTool: () =>
+                    print('canvasViewDidEndUsingTool'),
+                canvasViewDrawingDidChange: () =>
+                    print('canvasViewDrawingDidChange'),
+                canvasViewDidFinishRendering: () =>
+                    print('canvasViewDidFinishRendering'),
               ),
             ),
           ],

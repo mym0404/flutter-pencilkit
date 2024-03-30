@@ -201,7 +201,7 @@ private class PencilKitView: UIView {
     toolPicker?.addObserver(self)
     toolPicker?.setVisible(true, forFirstResponder: canvasView)
   }
-
+  
   private func layoutCanvasView() {
     addSubview(canvasView)
     NSLayoutConstraint.activate([
@@ -387,22 +387,6 @@ private class PencilKitView: UIView {
 
 @available(iOS 13.0, *)
 extension PencilKitView: PKCanvasViewDelegate {
-  func toolPickerVisibilityDidChange(_ toolPicker: PKToolPicker) {
-    channel.invokeMethod("toolPickerVisibilityDidChange", arguments: toolPicker.isVisible)
-  }
-
-  func toolPickerIsRulerActiveDidChange(_ toolPicker: PKToolPicker) {
-    channel.invokeMethod("toolPickerIsRulerActiveDidChange", arguments: toolPicker.isRulerActive)
-  }
-
-  func toolPickerFramesObscuredDidChange(_ toolPicker: PKToolPicker) {
-    channel.invokeMethod("toolPickerFramesObscuredDidChange", arguments: nil)
-  }
-
-  func toolPickerSelectedToolDidChange(_ toolPicker: PKToolPicker) {
-    channel.invokeMethod("toolPickerSelectedToolDidChange", arguments: nil)
-  }
-
   func canvasViewDidBeginUsingTool(_ canvasView: PKCanvasView) {
     channel.invokeMethod("canvasViewDidBeginUsingTool", arguments: nil)
   }
@@ -421,7 +405,23 @@ extension PencilKitView: PKCanvasViewDelegate {
 }
 
 @available(iOS 13.0, *)
-extension PencilKitView: PKToolPickerObserver {}
+extension PencilKitView: PKToolPickerObserver {
+  func toolPickerVisibilityDidChange(_ toolPicker: PKToolPicker) {
+    channel.invokeMethod("toolPickerVisibilityDidChange", arguments: toolPicker.isVisible)
+  }
+  
+  func toolPickerIsRulerActiveDidChange(_ toolPicker: PKToolPicker) {
+    channel.invokeMethod("toolPickerIsRulerActiveDidChange", arguments: toolPicker.isRulerActive)
+  }
+  
+  func toolPickerFramesObscuredDidChange(_ toolPicker: PKToolPicker) {
+    channel.invokeMethod("toolPickerFramesObscuredDidChange", arguments: nil)
+  }
+  
+  func toolPickerSelectedToolDidChange(_ toolPicker: PKToolPicker) {
+    channel.invokeMethod("toolPickerSelectedToolDidChange", arguments: nil)
+  }
+}
 
 extension UIColor {
   convenience init(hex: Int) {
