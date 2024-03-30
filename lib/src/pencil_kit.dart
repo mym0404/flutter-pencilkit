@@ -77,10 +77,16 @@ class PencilKit extends StatefulWidget {
     this.alwaysBounceHorizontal,
     this.isRulerActive,
     this.drawingPolicy,
-    this.onRulerActiveChanged,
     this.isOpaque,
     this.backgroundColor,
-    this.onToolPickerVisibilityChanged,
+    this.toolPickerVisibilityDidChange,
+    this.toolPickerIsRulerActiveDidChange,
+    this.toolPickerFramesObscuredDidChange,
+    this.toolPickerSelectedToolDidChange,
+    this.canvasViewDidBeginUsingTool,
+    this.canvasViewDidEndUsingTool,
+    this.canvasViewDrawingDidChange,
+    this.canvasViewDidFinishRendering,
   });
 
   /// {@macro flutter.widgets.AndroidView.hitTestBehavior}
@@ -115,11 +121,46 @@ class PencilKit extends StatefulWidget {
   /// The view’s background color. The default is transparent
   final Color? backgroundColor;
 
-  /// A callback for tool picker visibility state changed
-  final void Function(bool isVisible)? onToolPickerVisibilityChanged;
+  /// Tells the delegate that the tool picker UI changed visibility.
+  final void Function(bool isVisible)? toolPickerVisibilityDidChange;
 
-  /// A callback for ruler activate state changed
-  final void Function(bool isRulerActive)? onRulerActiveChanged;
+  /// Tells the delegate that the ruler active state was changed by the user.
+  final void Function(bool isRulerActive)? toolPickerIsRulerActiveDidChange;
+
+  /// Tells the delegate that the frames the tool picker obscures changed.
+  /// Note, the obscured frames for a view can also change when that view
+  /// changes, not just when this delegate method is called.
+  final void Function()? toolPickerFramesObscuredDidChange;
+
+  /// Tells the delegate that the selected tool was changed by the user.
+  final void Function()? toolPickerSelectedToolDidChange;
+
+  /// Called when the user starts using a tool, eg. selecting, drawing, or erasing.
+  /// This does not include moving the ruler.
+  final void Function()? canvasViewDidBeginUsingTool;
+
+  /// Called when the user stops using a tool, eg. selecting, drawing, or erasing.
+  final void Function()? canvasViewDidEndUsingTool;
+
+  /// Called after the drawing on the canvas did change.
+  ///
+  /// This may be called some time after the `canvasViewDidEndUsingTool:` delegate method.
+  /// For example, when using the Apple Pencil, pressure data is delayed from touch data, this
+  /// means that the user can stop drawing (`canvasViewDidEndUsingTool:` is called), but the
+  /// canvas view is still waiting for final pressure values; only when the final pressure values
+  /// are received is the drawing updated and this delegate method called.
+  ///
+  /// It is also possible that this method is not called, if the drawing interaction is cancelled.
+  final void Function()? canvasViewDrawingDidChange;
+
+  /// Called after setting `drawing` when the entire drawing is rendered and visible.
+  ///
+  /// This method lets you know when the canvas view finishes rendering all of the currently
+  /// visible content. This can be used to delay showing the canvas view until all content is visible.
+  ///
+  /// This is called every time the canvasView transitions from partially rendered to fully rendered,
+  /// including after setting the drawing, and after zooming or scrolling.
+  final void Function()? canvasViewDidFinishRendering;
 
   @override
   State<PencilKit> createState() => _PencilKitState();
@@ -192,11 +233,34 @@ class PencilKitController {
             MethodChannel('plugins.mjstudio/flutter_pencil_kit_$viewId') {
     _channel.setMethodCallHandler(
       (MethodCall call) async {
-        if (call.method == 'toolPickerVisibilityDidChange') {
-          widget.onToolPickerVisibilityChanged?.call(call.arguments as bool);
-        }
-        if (call.method == 'toolPickerIsRulerActiveDidChange') {
-          widget.onRulerActiveChanged?.call(call.arguments as bool);
+        switch (call.method) {
+          case 'toolPickerVisibilityDidChange':
+            widget.toolPickerVisibilityDidChange?.call(call.arguments as bool);
+            break;
+          case 'toolPickerIsRulerActiveDidChange':
+            widget.toolPickerIsRulerActiveDidChange
+                ?.call(call.arguments as bool);
+            break;
+          case 'toolPickerFramesObscuredDidChange':
+            widget.toolPickerFramesObscuredDidChange?.call();
+            break;
+          case 'toolPickerSelectedToolDidChange':
+            widget.toolPickerSelectedToolDidChange?.call();
+            break;
+          case 'canvasViewDidBeginUsingTool':
+            widget.canvasViewDidBeginUsingTool?.call();
+            break;
+          case 'canvasViewDrawingDidChange':
+            widget.canvasViewDrawingDidChange?.call();
+            break;
+          case 'canvasViewDidEndUsingTool':
+            widget.canvasViewDidEndUsingTool?.call();
+            break;
+          case 'canvasViewDidFinishRendering':
+            widget.canvasViewDidFinishRendering?.call();
+            break;
+          default:
+            return;
         }
       },
     );

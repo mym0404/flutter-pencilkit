@@ -2,13 +2,12 @@
 
 <img width="883" alt="PencilKitMJStudio" src="https://user-images.githubusercontent.com/33388801/197379199-56d74575-6f80-4afe-b916-6b09efc4c256.png">
 
-
 [![](https://github.com/mj-studio-library/flutter-pencilkit/actions/workflows/analyze_and_test.yml/badge.svg?branch=main)](https://github.com/mj-studio-library/flutter-pencilkit)
 [![pub package](https://img.shields.io/pub/v/pencil_kit.svg)](https://pub.dev/packages/pencil_kit)
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-blue.svg?style=flat-square)](#contributors-)
 [![licence](https://img.shields.io/badge/licence-MIT-blue.svg)](https://github.com/mj-studio-library/flutter-pencilkit/blob/main/LICENSE)
 
-#### Flutter plugin for using iOS Pencil Kit.
+#### Flutter plugin for using iOS Pencil Kit
 
 <img src="https://github.com/mj-studio-library/flutter-pencilkit/assets/33388801/5bbd923c-22a2-4976-9c8d-50f4505a66c7" width=240/>
 
@@ -34,7 +33,7 @@
 
 ### Requirements ✅
 
-* **iOS**: Deployment target >= `9.0`
+- **iOS**: Deployment target >= `9.0`
 
 ## Setup & Usage 🎉
 
@@ -64,7 +63,8 @@ Methods available for `PencilKitController`.
 `setPKTool` can fail if tool type is not supported by device iOS version
 In eraser tools, the width parameter will work only from iOS 16.4 or above iOS version
 
-You should check whether feature is available in user's iOS version with [ToolType.isAvailableFromIos16_4] and [ToolType.isAvailableFromIos17]
+You should check whether feature is available in user's iOS version
+with [ToolType.isAvailableFromIos16_4] and [ToolType.isAvailableFromIos17]
 
 Read more about `ToolType` type definition.
 
@@ -118,17 +118,23 @@ enum ToolType {
 
 All the available parameters.
 
-| Parameter                     | Description                                                                                                                    |     |
-|-------------------------------|--------------------------------------------------------------------------------------------------------------------------------|-----|
-| onPencilKitViewCreated        | A callback for platform view created. You can store `PencilKitController` from argument of this callback.                      |     |
-| hitTestBehavior               | iOS `UIKitView` `hitTestBehavior`                                                                                              |     |
-| unAvailableFallback           | A widget for render UnAvailable state. The default is A red box                                                                |     |
-| alwaysBounceVertical          | A Boolean value that determines whether bouncing always occurs when vertical scrolling reaches the end of the content.         |     |
-| alwaysBounceHorizontal        | A Boolean value that determines whether bouncing always occurs when horizontal scrolling reaches the end of the content view.  |     |
-| isRulerActive                 | A Boolean value that indicates whether a ruler view is visible on the canvas.                                                  |     |
-| drawingPolicy                 | The policy that controls the types of touches allowed when drawing on the canvas. This properties can be applied from iOS 14.0 |     |
-| onToolPickerVisibilityChanged | A callback for tool picker visibility state changed                                                                            |     |
-| onRulerActiveChanged          | A callback for ruler activate state changed                                                                                    |     |
+| Parameter                         | Description                                                                                                                    |     |
+|-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------|-----|
+| onPencilKitViewCreated            | A callback for platform view created. You can store `PencilKitController` from argument of this callback.                      |     |
+| hitTestBehavior                   | iOS `UIKitView` `hitTestBehavior`                                                                                              |     |
+| unAvailableFallback               | A widget for render UnAvailable state. The default is A red box                                                                |     |
+| alwaysBounceVertical              | A Boolean value that determines whether bouncing always occurs when vertical scrolling reaches the end of the content.         |     |
+| alwaysBounceHorizontal            | A Boolean value that determines whether bouncing always occurs when horizontal scrolling reaches the end of the content view.  |     |
+| isRulerActive                     | A Boolean value that indicates whether a ruler view is visible on the canvas.                                                  |     |
+| drawingPolicy                     | The policy that controls the types of touches allowed when drawing on the canvas. This properties can be applied from iOS 14.0 |     |
+| toolPickerVisibilityDidChange     | Tells the delegate that the tool picker UI changed visibility.                                                                 |     |
+| toolPickerIsRulerActiveDidChange  | Tells the delegate that the ruler active state was changed by the user.                                                        |     |
+| toolPickerFramesObscuredDidChange | Tells the delegate that the frames the tool picker obscures changed.                                                           |     |
+| toolPickerSelectedToolDidChange   | Tells the delegate that the selected tool was changed by the user.                                                             |     |
+| canvasViewDidBeginUsingTool       | Called when the user starts using a tool, eg. selecting, drawing, or erasing.                                                  |     |
+| canvasViewDidEndUsingTool         | Called when the user stops using a tool, eg. selecting, drawing, or erasing.                                                   |     |
+| canvasViewDrawingDidChange        | Called after the drawing on the canvas did change.                                                                             |     |
+| canvasViewDidFinishRendering      | Called after setting `drawing` when the entire drawing is rendered and visible.                                                |     |
 
 ## Example
 

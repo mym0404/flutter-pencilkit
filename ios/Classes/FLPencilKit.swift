@@ -387,17 +387,37 @@ private class PencilKitView: UIView {
 
 @available(iOS 13.0, *)
 extension PencilKitView: PKCanvasViewDelegate {
-  func toolPickerIsRulerActiveDidChange(_ toolPicker: PKToolPicker) {
-    channel.invokeMethod("toolPickerIsRulerActiveDidChange", arguments: toolPicker.isRulerActive)
-  }
-
   func toolPickerVisibilityDidChange(_ toolPicker: PKToolPicker) {
     channel.invokeMethod("toolPickerVisibilityDidChange", arguments: toolPicker.isVisible)
   }
 
-  func toolPickerFramesObscuredDidChange(_ toolPicker: PKToolPicker) {}
+  func toolPickerIsRulerActiveDidChange(_ toolPicker: PKToolPicker) {
+    channel.invokeMethod("toolPickerIsRulerActiveDidChange", arguments: toolPicker.isRulerActive)
+  }
 
-  func toolPickerSelectedToolDidChange(_ toolPicker: PKToolPicker) {}
+  func toolPickerFramesObscuredDidChange(_ toolPicker: PKToolPicker) {
+    channel.invokeMethod("toolPickerFramesObscuredDidChange", arguments: nil)
+  }
+
+  func toolPickerSelectedToolDidChange(_ toolPicker: PKToolPicker) {
+    channel.invokeMethod("toolPickerSelectedToolDidChange", arguments: nil)
+  }
+
+  func canvasViewDidBeginUsingTool(_ canvasView: PKCanvasView) {
+    channel.invokeMethod("canvasViewDidBeginUsingTool", arguments: nil)
+  }
+
+  func canvasViewDidEndUsingTool(_ canvasView: PKCanvasView) {
+    channel.invokeMethod("canvasViewDidEndUsingTool", arguments: nil)
+  }
+
+  func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
+    channel.invokeMethod("canvasViewDrawingDidChange", arguments: nil)
+  }
+
+  func canvasViewDidFinishRendering(_ canvasView: PKCanvasView) {
+    channel.invokeMethod("canvasViewDidFinishRendering", arguments: nil)
+  }
 }
 
 @available(iOS 13.0, *)

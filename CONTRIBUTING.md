@@ -54,7 +54,7 @@ Flutter plugins follow Google style—or Flutter style for Dart—for the langua
 use, and use auto-formatters:
 
 - Dart: formatted with `dart format`
-- Swift: I have no idea 😅 Just maintain readable format.
+- Swift: formatted with [swiftformat](https://github.com/nicklockwood/SwiftFormat) the config file is ios/.swiftformat
 
 ## Documentation(dart doc)
 
