@@ -145,6 +145,11 @@ Please read [CONTRIBUTING.md](/CONTRIBUTING.md) and contribute your works! Thank
 Check example on [pub.dev](https://pub.dev/packages/pencil_kit/example) page
 or [example project repo](example)
 
+## Troubleshooting
+
+- I get a `Pencil Kit XXX+ ms` and it freezes.
+  - Turn off `Graphics HUD` menu in iOS Developer Settings. [#22](https://github.com/mym0404/flutter-pencilkit/issues/22)
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
