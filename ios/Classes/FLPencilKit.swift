@@ -330,6 +330,7 @@ private class PencilKitView: UIView {
     default:
       break
     }
+    toolPicker?.selectedTool = canvasView.tool
   }
 
   func save(url: URL, withBase64Data: Bool) throws -> String? {
