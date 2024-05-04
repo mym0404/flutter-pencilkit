@@ -11,6 +11,7 @@
   },
   "scripts": {
     "prepare": "husky",
-    "check:all": "dart format --set-exit-if-changed . && flutter analyze"
+    "check:all": "dart format --set-exit-if-changed . && flutter analyze",
+    "t": "yarn check:all"
   }
 }

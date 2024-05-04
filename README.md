@@ -45,18 +45,20 @@ flutter pub add pencil_kit
 
 Methods available for `PencilKitController`.
 
-| Method                                                                             | Description                                                                             | Throws |
-|------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|--------|
-| clear()                                                                            | Clear canvas                                                                            | X      |
-| show()                                                                             | Show Palette                                                                            | X      |
-| hide()                                                                             | Hide Palette                                                                            | X      |
-| redo()                                                                             | Redo last drawing action                                                                | X      |
-| undo()                                                                             | Undo last drawing action                                                                | X      |
-| save(): Future<String?>                                                            | Save drawing data into file system, can return base 64 data if `withBase64Data` is true | O      |
-| load(): Future<String?>                                                            | Load drawing data from file system, can return base 64 data if `withBase64Data` is true | O      |
-| getBase64Data(): Future<String>                                                    | Get current drawing data as base64 string form                                          | O      |
-| loadBase64Data(String base64Data): Future<void>                                    | Load base64 drawing data into canvas                                                    | O      |
-| setPKTool({required ToolType toolType, double? width, Color? color}): Future<void> | Set `PKTool` type with width and color                                                  | X      |
+| Method                                                                             | Description                                                                             | Throws | Etc                                                                          |
+|------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|--------|------------------------------------------------------------------------------|
+| clear()                                                                            | Clear canvas                                                                            | X      |                                                                              |
+| show()                                                                             | Show Palette                                                                            | X      |                                                                              |
+| hide()                                                                             | Hide Palette                                                                            | X      |                                                                              |
+| redo()                                                                             | Redo last drawing action                                                                | X      |                                                                              |
+| undo()                                                                             | Undo last drawing action                                                                | X      |                                                                              |
+| save(): Future<String?>                                                            | Save drawing data into file system, can return base 64 data if `withBase64Data` is true | O      |                                                                              |
+| load(): Future<String?>                                                            | Load drawing data from file system, can return base 64 data if `withBase64Data` is true | O      |                                                                              |
+| getBase64Data(): Future<String>                                                    | Get current drawing data as base64 string form                                          | O      |                                                                              |
+| loadBase64Data(String base64Data): Future<void>                                    | Load base64 drawing data into canvas                                                    | O      |                                                                              |
+| getBase64PngData(): Future<String>                                                 | Get current drawing data as png base64 string form                                      | O      | scale = 0 means use default UIScreen.main.scale                              |
+| getBase64JpegData(): Future<String>                                                | Get current drawing data as jpeg base64 string form                                     | O      | scale = 0 means use default UIScreen.main.scale. default compression is 0.93 |
+| setPKTool({required ToolType toolType, double? width, Color? color}): Future<void> | Set `PKTool` type with width and color                                                  | X      |                                                                              |
 
 ## Caution for `setPKTool`
 

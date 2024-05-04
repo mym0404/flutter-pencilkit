@@ -349,6 +349,27 @@ class PencilKitController {
     return await _channel.invokeMethod('getBase64Data') as String;
   }
 
+  /// Get current drawing data as png base 64 encoded form.
+  ///
+  /// Throws an [Error] if failed
+  /// ```
+  Future<String> getBase64PngData({double scale = 0}) async {
+    return await _channel.invokeMethod('getBase64PngData', <Object>[scale])
+        as String;
+  }
+
+  /// Get current drawing data as jpeg base 64 encoded form.
+  ///
+  /// Throws an [Error] if failed
+  /// ```
+  Future<String> getBase64JpegData(
+      {double scale = 0, double compression = 0.93}) async {
+    return await _channel.invokeMethod('getBase64JpegData', <Object>[
+      scale,
+      compression,
+    ]) as String;
+  }
+
   /// Load drawing data from base 64 encoded form.
   /// ```
   /// Throws an [Error] if failed

@@ -84,6 +84,10 @@ class FLPencilKit: NSObject, FlutterPlatformView {
         load(pencilKitView: pencilKitView, call: call, result: result)
       case "getBase64Data":
         getBase64Data(pencilKitView: pencilKitView, call: call, result: result)
+      case "getBase64PngData":
+        getBase64PngData(pencilKitView: pencilKitView, call: call, result: result)
+      case "getBase64JpegData":
+        getBase64JpegData(pencilKitView: pencilKitView, call: call, result: result)
       case "loadBase64Data":
         loadBase64Data(pencilKitView: pencilKitView, call: call, result: result)
       case "applyProperties":
@@ -125,6 +129,35 @@ class FLPencilKit: NSObject, FlutterPlatformView {
   ) {
     let base64Data = pencilKitView.getBase64Data()
     result(base64Data)
+  }
+
+  @available(iOS 13, *)
+  private func getBase64PngData(
+    pencilKitView: PencilKitView,
+    call: FlutterMethodCall,
+    result: FlutterResult
+  ) {
+    if let base64Data = pencilKitView.getBase64PngData(scale: (call.arguments as! [Double])[0]) {
+      result(base64Data)
+    } else {
+      result(FlutterError(code: "NATIVE_ERROR", message: "getBase64PngData failed", details: nil))
+    }
+  }
+
+  @available(iOS 13, *)
+  private func getBase64JpegData(
+    pencilKitView: PencilKitView,
+    call: FlutterMethodCall,
+    result: FlutterResult
+  ) {
+    if let base64Data = pencilKitView.getBase64JpegData(
+      scale: (call.arguments as! [Double])[0],
+      compression: (call.arguments as! [Double])[1]
+    ) {
+      result(base64Data)
+    } else {
+      result(FlutterError(code: "NATIVE_ERROR", message: "getBase64JpegData failed", details: nil))
+    }
   }
 
   @available(iOS 13, *)
@@ -201,7 +234,7 @@ private class PencilKitView: UIView {
     toolPicker?.addObserver(self)
     toolPicker?.setVisible(true, forFirstResponder: canvasView)
   }
-  
+
   private func layoutCanvasView() {
     addSubview(canvasView)
     NSLayoutConstraint.activate([
@@ -329,6 +362,16 @@ private class PencilKitView: UIView {
     canvasView.drawing.dataRepresentation().base64EncodedString()
   }
 
+  func getBase64PngData(scale: Double) -> String? {
+    let image = canvasView.drawing.image(from: canvasView.bounds, scale: scale)
+    return image.pngData()?.base64EncodedString()
+  }
+
+  func getBase64JpegData(scale: Double, compression: Double) -> String? {
+    let image = canvasView.drawing.image(from: canvasView.bounds, scale: scale)
+    return image.jpegData(compressionQuality: compression)?.base64EncodedString()
+  }
+
   func loadBase64Data(base64Data: String) throws {
     let data = Data(base64Encoded: base64Data)!
     let drawing = try PKDrawing(data: data)
@@ -409,15 +452,15 @@ extension PencilKitView: PKToolPickerObserver {
   func toolPickerVisibilityDidChange(_ toolPicker: PKToolPicker) {
     channel.invokeMethod("toolPickerVisibilityDidChange", arguments: toolPicker.isVisible)
   }
-  
+
   func toolPickerIsRulerActiveDidChange(_ toolPicker: PKToolPicker) {
     channel.invokeMethod("toolPickerIsRulerActiveDidChange", arguments: toolPicker.isRulerActive)
   }
-  
+
   func toolPickerFramesObscuredDidChange(_ toolPicker: PKToolPicker) {
     channel.invokeMethod("toolPickerFramesObscuredDidChange", arguments: nil)
   }
-  
+
   func toolPickerSelectedToolDidChange(_ toolPicker: PKToolPicker) {
     channel.invokeMethod("toolPickerSelectedToolDidChange", arguments: nil)
   }
