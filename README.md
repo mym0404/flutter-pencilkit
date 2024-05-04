@@ -9,7 +9,7 @@
 
 #### Flutter plugin for using iOS Pencil Kit
 
-<img src="https://raw.githubusercontent.com/mym0404/image-archive/master/202405041708722.webp" width="350" alt="preview"/>
+<img src="https://raw.githubusercontent.com/mym0404/image-archive/master/202405041708722.webp" alt="preview"/>
 
 ### Note 📒
 
