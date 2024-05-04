@@ -1,3 +1,9 @@
+## 2.1.0
+
+* Add `getBase64PngData` command
+* Add `getBase64JpegData` command
+* Change selected tool in tool picker on tool changed programmatically
+
 ## 2.0.0
 
 * Add callbacks
