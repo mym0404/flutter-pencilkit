@@ -9,7 +9,7 @@
 
 #### Flutter plugin for using iOS Pencil Kit
 
-<img src="https://github.com/mj-studio-library/flutter-pencilkit/assets/33388801/5bbd923c-22a2-4976-9c8d-50f4505a66c7" width=240/>
+<img src="https://raw.githubusercontent.com/mym0404/image-archive/master/202405041708826.webp" width=350/>
 
 ### Note 📒
 
@@ -21,7 +21,7 @@
 
 - **iOS**
 
-### Features & Todo 🌟
+### Highlights 🌟
 
 - [x] Drawing
 - [x] Show/Hide palette
@@ -29,6 +29,7 @@
 - [x] Clear
 - [x] UI properties(background color, scrollability, isOpaque, etc...)
 - [x] Import/Export drawing data
+- [x] Get drawing png/jpeg image data as base64
 - [x] Manage drawing tools programmatically
 
 ### Requirements ✅
