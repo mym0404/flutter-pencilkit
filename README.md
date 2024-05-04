@@ -11,6 +11,8 @@
 
 <img src="https://raw.githubusercontent.com/mym0404/image-archive/master/202405041708722.webp" alt="preview"/>
 
+[Changelog](/CHANGELOG.md)
+
 ### Note 📒
 
 - This package only provides iOS implementation. If you try use widget of this package other than
