@@ -1,6 +1,6 @@
 # Flutter iOS Pencil Kit
 
-<img width="883" alt="PencilKitMJStudio" src="https://raw.githubusercontent.com/mym0404/image-archive/master/202405101020788.webp">
+<img width="883" alt="PencilKitMJStudio" src="https://raw.githubusercontent.com/mym0404/image-archive/master/202405101444223.webp">
 
 [![](https://github.com/mj-studio-library/flutter-pencilkit/actions/workflows/analyze_and_test.yml/badge.svg?branch=main)](https://github.com/mj-studio-library/flutter-pencilkit)
 [![pub package](https://img.shields.io/pub/v/pencil_kit.svg)](https://pub.dev/packages/pencil_kit)
