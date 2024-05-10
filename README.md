@@ -1,10 +1,9 @@
 # Flutter iOS Pencil Kit
 
-<img width="883" alt="PencilKitMJStudio" src="https://user-images.githubusercontent.com/33388801/197379199-56d74575-6f80-4afe-b916-6b09efc4c256.png">
+<img width="883" alt="PencilKitMJStudio" src="https://raw.githubusercontent.com/mym0404/image-archive/master/202405101020788.webp">
 
 [![](https://github.com/mj-studio-library/flutter-pencilkit/actions/workflows/analyze_and_test.yml/badge.svg?branch=main)](https://github.com/mj-studio-library/flutter-pencilkit)
 [![pub package](https://img.shields.io/pub/v/pencil_kit.svg)](https://pub.dev/packages/pencil_kit)
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-blue.svg?style=flat-square)](#contributors-)
 [![licence](https://img.shields.io/badge/licence-MIT-blue.svg)](https://github.com/mj-studio-library/flutter-pencilkit/blob/main/LICENSE)
 
 #### Flutter plugin for using iOS Pencil Kit
@@ -155,28 +154,3 @@ or [example project repo](example)
 - I get a `Pencil Kit XXX+ ms` and it freezes.
   - Turn off `Graphics HUD` menu in iOS Developer Settings. [#22](https://github.com/mym0404/flutter-pencilkit/issues/22)
 
-## Contributors ✨
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://www.mjstudio.net/"><img src="https://avatars.githubusercontent.com/u/33388801?v=4?s=100" width="100px;" alt="MJ Studio"/><br /><sub><b>MJ Studio</b></sub></a><br /><a href="#ideas-mym0404" title="Ideas, Planning, & Feedback">🤔</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/jack-szeto"><img src="https://avatars.githubusercontent.com/u/47553851?v=4?s=100" width="100px;" alt="Jack Szeto"/><br /><sub><b>Jack Szeto</b></sub></a><br /><a href="https://github.com/mj-studio-library/flutter-pencilkit/commits?author=jack-szeto" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/frybitsinc"><img src="https://avatars.githubusercontent.com/u/16763975?v=4?s=100" width="100px;" alt="frybitsinc"/><br /><sub><b>frybitsinc</b></sub></a><br /><a href="https://github.com/mj-studio-library/flutter-pencilkit/commits?author=frybitsinc" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/bomb0069"><img src="https://avatars.githubusercontent.com/u/1587783?v=4?s=100" width="100px;" alt="bomb0069"/><br /><sub><b>bomb0069</b></sub></a><br /><a href="https://github.com/mj-studio-library/flutter-pencilkit/commits?author=bomb0069" title="Code">💻</a></td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors)
-specification. Contributions of any kind welcome!
