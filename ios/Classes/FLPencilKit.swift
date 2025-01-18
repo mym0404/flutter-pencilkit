@@ -188,7 +188,9 @@ private func createCanvasView(delegate: PKCanvasViewDelegate) -> PKCanvasView {
   v.drawing = PKDrawing()
   v.delegate = delegate
   v.alwaysBounceVertical = false
-  v.allowsFingerDrawing = true
+  if #unavailable(iOS 14.0) {
+    v.allowsFingerDrawing = true
+  }
   v.backgroundColor = .clear
   v.isOpaque = false
   return v
