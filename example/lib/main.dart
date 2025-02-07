@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
           textButtonTheme: const TextButtonThemeData(
             style: ButtonStyle(
               visualDensity: VisualDensity.compact,
-              padding: MaterialStatePropertyAll(
+              padding: WidgetStatePropertyAll(
                 EdgeInsets.all(8),
               ),
             ),
@@ -369,7 +369,7 @@ class _MyAppState extends State<MyApp> {
                     alwaysBounceHorizontal: true,
                     isRulerActive: false,
                     drawingPolicy: PencilKitIos14DrawingPolicy.anyInput,
-                    backgroundColor: Colors.yellow.withOpacity(0.1),
+                    backgroundColor: Colors.yellow.withValues(alpha: 0.1),
                     isOpaque: false,
                     toolPickerVisibilityDidChange: (isVisible) =>
                         print('toolPickerVisibilityDidChange $isVisible'),

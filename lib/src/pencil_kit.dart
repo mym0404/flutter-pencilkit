@@ -282,6 +282,7 @@ class PencilKitController {
       'isRulerActive': widget.isRulerActive,
       'drawingPolicy': widget.drawingPolicy?.value,
       'isOpaque': widget.isOpaque,
+      // ignore: deprecated_member_use
       'backgroundColor': widget.backgroundColor?.value,
     });
   }
@@ -401,6 +402,7 @@ class PencilKitController {
       _channel.invokeMethod('setPKTool', <String, Object?>{
         'toolType': toolType.name,
         'width': width,
+        // ignore: deprecated_member_use
         'color': color?.value,
       });
 }
