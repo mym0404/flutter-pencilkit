@@ -2,23 +2,17 @@ PODS:
   - Flutter (1.0.0)
   - fluttertoast (0.0.2):
     - Flutter
-    - Toast
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
   - pencil_kit (0.0.1):
     - Flutter
-  - Toast (4.0.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - pencil_kit (from `.symlinks/plugins/pencil_kit/ios`)
-
-SPEC REPOS:
-  trunk:
-    - Toast
 
 EXTERNAL SOURCES:
   Flutter:
@@ -32,11 +26,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  fluttertoast: 31b00dabfa7fb7bacd9e7dbee580d7a2ff4bf265
-  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
-  pencil_kit: 97b56e7e011e7bddd920311849a2105c4b0b7923
-  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
+  fluttertoast: 2c67e14dce98bbdb200df9e1acf610d7a6264ea1
+  path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
+  pencil_kit: a0af2a4260f43d63ccbe6ea4e9d9f10073f88166
 
 PODFILE CHECKSUM: c4c93c5f6502fe2754f48404d3594bf779584011
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
