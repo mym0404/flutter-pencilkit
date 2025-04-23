@@ -26,6 +26,7 @@ class _MyAppState extends State<MyApp> {
   double currentWidth = 1;
   Color currentColor = Colors.black;
   String base64Image = '';
+  bool isPencilKitEnabled = true;
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +64,13 @@ class _MyAppState extends State<MyApp> {
             IconButton(
               icon: const Icon(Icons.refresh),
               onPressed: () => controller.clear(),
+            ),
+            Switch(
+              value: isPencilKitEnabled,
+              onChanged: (bool value) {
+                setState(() => isPencilKitEnabled = value);
+                controller.setPencilKitEnabled(isPencilKitEnabled);
+              },
             ),
           ],
         ),
