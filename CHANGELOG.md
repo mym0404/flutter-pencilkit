@@ -1,3 +1,9 @@
+## 2.1.1
+
+* fix: Respect the picker's "Draw with finger" setting by default by [PR](https://github.com/mym0404/flutter-pencilkit/pull/28) by [edpizzi](https://github.com/edpizzi)
+
+Thank you for contributing
+
 ## 2.1.0
 
 * Add `getBase64PngData` command
