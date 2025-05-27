@@ -193,6 +193,15 @@ private func createCanvasView(delegate: PKCanvasViewDelegate) -> PKCanvasView {
   }
   v.backgroundColor = .clear
   v.isOpaque = false
+  v.isLongPressEnabled = false
+  // disable long-press finger touches
+  if let recognizers = v.gestureRecognizers {
+    for recognizer in recognizers {
+      if let lp = recognizer as? UILongPressGestureRecognizer,lp.allowedTouchTypes.contains(.direct) {
+        lp.isEnabled = false
+      }
+    }
+  }
   return v
 }
 
@@ -404,6 +413,9 @@ private class PencilKitView: UIView {
     if let isOpaque = properties["isOpaque"] as? Bool {
       canvasView.isOpaque = isOpaque
     }
+    if let isLongPressEnabled = properties["isLongPressEnabled"] as? Bool {
+      canvasView.isLongPressEnabled = isLongPressEnabled
+    }
     if let backgroundColor = properties["backgroundColor"] as? Int {
       canvasView.backgroundColor = UIColor(hex: backgroundColor)
     }
@@ -423,6 +435,7 @@ private class PencilKitView: UIView {
       new.drawingPolicy = old.drawingPolicy
     }
     new.isOpaque = old.isOpaque
+    new.isLongPressEnabled = old.isLongPressEnabled
     new.backgroundColor = old.backgroundColor
 
     if toolPicker?.isVisible == true {
