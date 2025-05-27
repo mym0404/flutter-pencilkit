@@ -2,6 +2,13 @@ import Flutter
 import PencilKit
 import UIKit
 
+extension UIView {
+  /// Returns this view and every subview, recursively.
+  var allSubviewsRecursive: [UIView] {
+    return subviews + subviews.flatMap { $0.allSubviewsRecursive }
+  }
+}
+
 class FLPencilKitFactory: NSObject, FlutterPlatformViewFactory {
   private var messenger: FlutterBinaryMessenger
 
@@ -196,12 +203,21 @@ private func createCanvasView(delegate: PKCanvasViewDelegate) -> PKCanvasView {
   }
   v.backgroundColor = .clear
   v.isOpaque = false
-  v.isLongPressEnabled = false
   // disable long-press finger touches
   if let recognizers = v.gestureRecognizers {
     for recognizer in recognizers {
-      if let lp = recognizer as? UILongPressGestureRecognizer,lp.allowedTouchTypes.contains(.direct) {
+      if let lp = recognizer as? UILongPressGestureRecognizer,
+         lp.allowedTouchTypes.contains(NSNumber(value: UITouch.TouchType.direct.rawValue)) {
         lp.isEnabled = false
+      }
+    }
+  }
+
+  // Remove PencilKit’s new edit-menu interactions (iOS 16+) 
+  if #available(iOS 16.0, *) {
+    for view in [v] + v.allSubviewsRecursive {
+      for interaction in view.interactions where interaction is UIEditMenuInteraction {
+        view.removeInteraction(interaction)
       }
     }
   }
@@ -420,9 +436,6 @@ private class PencilKitView: UIView {
     if let isOpaque = properties["isOpaque"] as? Bool {
       canvasView.isOpaque = isOpaque
     }
-    if let isLongPressEnabled = properties["isLongPressEnabled"] as? Bool {
-      canvasView.isLongPressEnabled = isLongPressEnabled
-    }
     if let backgroundColor = properties["backgroundColor"] as? Int {
       canvasView.backgroundColor = UIColor(hex: backgroundColor)
     }
@@ -442,7 +455,6 @@ private class PencilKitView: UIView {
       new.drawingPolicy = old.drawingPolicy
     }
     new.isOpaque = old.isOpaque
-    new.isLongPressEnabled = old.isLongPressEnabled
     new.backgroundColor = old.backgroundColor
 
     if toolPicker?.isVisible == true {
