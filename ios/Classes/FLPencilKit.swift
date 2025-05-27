@@ -78,6 +78,9 @@ class FLPencilKit: NSObject, FlutterPlatformView {
       case "setPKTool":
         pencilKitView.setPKTool(properties: call.arguments as! [String: Any])
         result(nil)
+      case "setPencilKitEnabled":
+        pencilKitView.setPencilKitEnabled(enabled:call.arguments as! Bool)
+        result(nil)
       case "save":
         save(pencilKitView: pencilKitView, call: call, result: result)
       case "load":
@@ -279,6 +282,10 @@ private class PencilKitView: UIView {
 
   func hide() {
     canvasView.resignFirstResponder()
+  }
+
+  func setPencilKitEnabled(enabled: Bool) {
+    canvasView.isUserInteractionEnabled = enabled
   }
 
   func setPKTool(properties: [String: Any]) {
