@@ -203,24 +203,6 @@ private func createCanvasView(delegate: PKCanvasViewDelegate) -> PKCanvasView {
   }
   v.backgroundColor = .clear
   v.isOpaque = false
-  // disable long-press finger touches
-  if let recognizers = v.gestureRecognizers {
-    for recognizer in recognizers {
-      if let lp = recognizer as? UILongPressGestureRecognizer,
-         lp.allowedTouchTypes.contains(NSNumber(value: UITouch.TouchType.direct.rawValue)) {
-        lp.isEnabled = false
-      }
-    }
-  }
-
-  // Remove PencilKit’s new edit-menu interactions (iOS 16+) 
-  if #available(iOS 16.0, *) {
-    for view in [v] + v.allSubviewsRecursive {
-      for interaction in view.interactions where interaction is UIEditMenuInteraction {
-        view.removeInteraction(interaction)
-      }
-    }
-  }
   return v
 }
 
@@ -436,31 +418,71 @@ private class PencilKitView: UIView {
     if let isOpaque = properties["isOpaque"] as? Bool {
       canvasView.isOpaque = isOpaque
     }
+    if let isLongPressEnabled = properties["isLongPressEnabled"] as? Bool {
+        if isLongPressEnabled == false {
+            disableIsLongPress(v: canvasView)
+        }
+    }
     if let backgroundColor = properties["backgroundColor"] as? Int {
       canvasView.backgroundColor = UIColor(hex: backgroundColor)
     }
   }
+    
+    private func disableIsLongPress(v: PKCanvasView) {
+        // disable long-press finger touches
+        if let recognizers = v.gestureRecognizers {
+          for recognizer in recognizers {
+            if let lp = recognizer as? UILongPressGestureRecognizer,
+               lp.allowedTouchTypes.contains(NSNumber(value: UITouch.TouchType.direct.rawValue)) {
+              lp.isEnabled = false
+            }
+          }
+        }
 
-  private func synchronizeCanvasViewProperties(old: PKCanvasView, new: PKCanvasView) {
-    if let toolPicker {
-      toolPicker.removeObserver(old)
-      toolPicker.addObserver(new)
-      toolPicker.setVisible(true, forFirstResponder: new)
+        // Remove PencilKit’s new edit-menu interactions (iOS 16+)
+        if #available(iOS 16.0, *) {
+          for view in [v] + v.allSubviewsRecursive {
+            for interaction in view.interactions where interaction is UIEditMenuInteraction {
+              view.removeInteraction(interaction)
+            }
+          }
+        }
     }
 
-    new.alwaysBounceVertical = old.alwaysBounceVertical
-    new.alwaysBounceHorizontal = old.alwaysBounceHorizontal
-    new.isRulerActive = old.isRulerActive
-    if #available(iOS 14.0, *) {
-      new.drawingPolicy = old.drawingPolicy
-    }
-    new.isOpaque = old.isOpaque
-    new.backgroundColor = old.backgroundColor
+private func synchronizeCanvasViewProperties(old: PKCanvasView, new: PKCanvasView) {
+   if let toolPicker {
+     toolPicker.removeObserver(old)
+     toolPicker.addObserver(new)
+     toolPicker.setVisible(true, forFirstResponder: new)
+   }
 
-    if toolPicker?.isVisible == true {
-      new.becomeFirstResponder()
+   new.alwaysBounceVertical = old.alwaysBounceVertical
+   new.alwaysBounceHorizontal = old.alwaysBounceHorizontal
+   new.isRulerActive = old.isRulerActive
+   if #available(iOS 14.0, *) {
+     new.drawingPolicy = old.drawingPolicy
+   }
+   new.isOpaque = old.isOpaque
+   new.backgroundColor = old.backgroundColor
+  
+  // Synchronize long-press settings by checking if old canvas had disabled long-press
+  if let oldRecognizers = old.gestureRecognizers {
+    let hasDisabledLongPress = oldRecognizers.contains { recognizer in
+      if let lp = recognizer as? UILongPressGestureRecognizer,
+         lp.allowedTouchTypes.contains(NSNumber(value: UITouch.TouchType.direct.rawValue)) {
+        return !lp.isEnabled
+      }
+      return false
+    }
+    if hasDisabledLongPress {
+      disableIsLongPress(v: new)
     }
   }
+
+   if toolPicker?.isVisible == true {
+     new.becomeFirstResponder()
+   }
+ }
 }
 
 @available(iOS 13.0, *)
