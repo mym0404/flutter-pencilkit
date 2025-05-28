@@ -120,10 +120,10 @@ class PencilKit extends StatefulWidget {
   /// You should always set the value of this property to false if the view is fully or partially transparent.
   final bool? isOpaque;
 
-  /// A Boolean value that indicates whether a long-press with finger touch is enabled.
+  /// A Boolean value that indicates whether a long-press with finger touch is enabled. The default value of this property is true.
   final bool? isLongPressEnabled;
 
-  /// A Boolean value that indicates whether a pencilkit is enabled.
+  /// A Boolean value that indicates whether a PencilKit is enabled. The default value of this property is true.
   final bool? isPencilKitEnabled;
 
   /// The view’s background color. The default is transparent
