@@ -78,7 +78,7 @@ class PencilKit extends StatefulWidget {
     this.isRulerActive,
     this.drawingPolicy,
     this.isOpaque,
-    this.isLongPressEnabled,
+    this.isLongPressEnabled = true,
     this.isPencilKitEnabled = true,
     this.backgroundColor,
     this.toolPickerVisibilityDidChange,
