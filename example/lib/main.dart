@@ -27,6 +27,7 @@ class _MyAppState extends State<MyApp> {
   Color currentColor = Colors.black;
   String base64Image = '';
   bool isPencilKitEnabled = true;
+  bool isLongPressEnabled = true;
 
   @override
   Widget build(BuildContext context) {
@@ -184,6 +185,14 @@ class _MyAppState extends State<MyApp> {
                           });
                         },
                         tooltip: "Get base64 jpeg data",
+                      ),
+                      Spacer(), 
+                      Text("isLongPressEnabled"), 
+                      Switch(
+                        value: isLongPressEnabled,
+                        onChanged: (bool value) {
+                          setState(() => isLongPressEnabled = value);
+                        },
                       ),
                     ],
                   ),
@@ -376,9 +385,10 @@ class _MyAppState extends State<MyApp> {
                     alwaysBounceVertical: false,
                     alwaysBounceHorizontal: true,
                     isRulerActive: false,
-                    drawingPolicy: PencilKitIos14DrawingPolicy.anyInput,
+                    drawingPolicy: PencilKitIos14DrawingPolicy.onlyPencil,
                     backgroundColor: Colors.yellow.withValues(alpha: 0.1),
                     isOpaque: false,
+                    isLongPressEnabled: isLongPressEnabled,
                     toolPickerVisibilityDidChange: (isVisible) =>
                         print('toolPickerVisibilityDidChange $isVisible'),
                     toolPickerIsRulerActiveDidChange: (isRulerActive) => print(
