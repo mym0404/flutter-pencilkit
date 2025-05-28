@@ -186,8 +186,8 @@ class _MyAppState extends State<MyApp> {
                         },
                         tooltip: "Get base64 jpeg data",
                       ),
-                      Spacer(), 
-                      Text("isLongPressEnabled"), 
+                      Spacer(),
+                      Text("isLongPressEnabled"),
                       Switch(
                         value: isLongPressEnabled,
                         onChanged: (bool value) {
