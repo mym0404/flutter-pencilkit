@@ -78,6 +78,8 @@ class PencilKit extends StatefulWidget {
     this.isRulerActive,
     this.drawingPolicy,
     this.isOpaque,
+    this.isLongPressEnabled = true,
+    this.isPencilKitEnabled = true,
     this.backgroundColor,
     this.toolPickerVisibilityDidChange,
     this.toolPickerIsRulerActiveDidChange,
@@ -117,6 +119,12 @@ class PencilKit extends StatefulWidget {
   /// If the view is opaque and either does not fill its bounds or contains wholly or partially transparent content, the results are unpredictable.
   /// You should always set the value of this property to false if the view is fully or partially transparent.
   final bool? isOpaque;
+
+  /// A Boolean value that indicates whether a long-press with finger touch is enabled. The default value of this property is true.
+  final bool? isLongPressEnabled;
+
+  /// A Boolean value that indicates whether a PencilKit is enabled. The default value of this property is true.
+  final bool? isPencilKitEnabled;
 
   /// The view’s background color. The default is transparent
   final Color? backgroundColor;
@@ -282,10 +290,14 @@ class PencilKitController {
       'isRulerActive': widget.isRulerActive,
       'drawingPolicy': widget.drawingPolicy?.value,
       'isOpaque': widget.isOpaque,
+      'isLongPressEnabled': widget.isLongPressEnabled,
       // ignore: deprecated_member_use
       'backgroundColor': widget.backgroundColor?.value,
     });
   }
+
+  Future<void> setPencilKitEnabled(bool enable) =>
+      _channel.invokeMethod('setPencilKitEnabled', enable);
 
   /// Clear all drawing data
   Future<void> clear() => _channel.invokeMethod('clear');
